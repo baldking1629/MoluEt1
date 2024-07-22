@@ -104,7 +104,8 @@ namespace MoluEt
             OracleConnection connection = new OracleConnection(_connectionString);
             connection.Open();
             var command = connection.CreateCommand();
-            command.CommandText = $"INSERT INTO CFKTT005 (SIRKETNO,IRK_NO,IRK_ADI,ULKE_ADI,ACIKLAMA) VALUES(1,{h.IRK_NO},'{h.IRK_ADI}','{h.ULKE_ADI}','{h.ACIKLAMA}')";
+            int irkno = GetList().Max(o => o.IRK_NO) + 1;
+            command.CommandText = $"INSERT INTO CFKTT005 (SIRKETNO,IRK_NO,IRK_ADI,ULKE_ADI,ACIKLAMA) VALUES(1,{irkno},'{h.IRK_ADI}','{h.ULKE_ADI}','{h.ACIKLAMA}')";
             command.ExecuteNonQuery();
         }
         public void IrkGuncelle(IrkTanım h, int id)

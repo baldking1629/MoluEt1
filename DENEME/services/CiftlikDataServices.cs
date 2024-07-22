@@ -183,8 +183,9 @@ public class CiftlikDataService
     {
         OracleConnection connection = new OracleConnection(_connectionString);
         connection.Open();
+        int ciftlikno = GetList().Max(o => o.CIFTLIKNO) + 1;
         var command = connection.CreateCommand();
-        command.CommandText = $"INSERT INTO CFKMT001 (SIRKETNO,CIFTLIKNO,CIFTLIKADI,ADRES,ILCE,IL,TELEFON,FAX,E_MAIL,VERGI_DAIRESI,VERGI_NO,DEPONO,RUHSATNO,ISLETMENO) VALUES(1,{c.CIFTLIKNO},'{c.CIFTLIKADI}','{c.ADRES}','{c.ILCE}','{c.IL}','{c.TELEFON}','{c.FAX}','{c.E_MAIL}','{c.VERGI_DAIRESI}','{c.VERGI_NO}',{c.DEPONO},'{c.RUHSATNO}','{c.ISLETMENO}')";
+        command.CommandText = $"INSERT INTO CFKMT001 (SIRKETNO,CIFTLIKNO,CIFTLIKADI,ADRES,ILCE,IL,TELEFON,FAX,E_MAIL,VERGI_DAIRESI,VERGI_NO,DEPONO,RUHSATNO,ISLETMENO) VALUES(1,{ciftlikno},'{c.CIFTLIKADI}','{c.ADRES}','{c.ILCE}','{c.IL}','{c.TELEFON}','{c.FAX}','{c.E_MAIL}','{c.VERGI_DAIRESI}','{c.VERGI_NO}',{c.DEPONO},'{c.RUHSATNO}','{c.ISLETMENO}')";
         command.ExecuteNonQuery();
 
 

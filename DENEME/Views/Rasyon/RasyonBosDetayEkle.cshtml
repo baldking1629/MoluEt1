@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<MoluEt.Models.Rasyon>
+
+@{
+    ViewData["Title"] = "RasyonBosDetayEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="RasyonDetayEkle" asp-route-id="@Model[0].URUNNO@Model[0].CIFTLIKNO" asp-controller="Rasyon" method="post">
+    <h2>Çiftlik no: @Model[0].CIFTLIKNO @Model[0].CIFTLIKADI </h2>
+    <h2>Rasyon Ürünü: @Model[0].URUNNO @Model[0].URUNACIKLAMA  </h2>
+    
+
+    <input name="CIFTLIKNO" value=@Model[0].CIFTLIKNO hidden="hidden" />
+
+
+    <input name="URUNNO" value=@Model[0].URUNNO hidden="hidden" />
+
+
+    @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia)
+
+    <input placeholder="Miktar" class="input-group" name="MIKTAR" />
+    <button asp-action="RasyonDetayEkle" asp-route-id="@Model[0].URUNNO@Model[0].CIFTLIKNO" asp-controller="Rasyon">Rasyon Detay Ekle</button>
+
+
+</form>

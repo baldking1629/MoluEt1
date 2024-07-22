@@ -39,8 +39,7 @@ namespace MoluEt.Controllers
             List<RasyonDetay> data = _rasyonDataServices.GetListRasyonDetayById(urunno, ciftlikno);
             if (data.Count == 0)
             {
-                List<RasyonDetay> d = new List<RasyonDetay>();
-                return RedirectToAction("RasyonList");
+                return RedirectToAction("RasyonBosDetayEkle", new { id });
             }
             else
             {
@@ -96,46 +95,54 @@ namespace MoluEt.Controllers
             return RedirectToAction("RasyonList");
         }
 
-        //[HttpGet]
-        //public IActionResult RasyonDetayEkle(int id)
-        //{
-        //    List<Ciftlik> ciftlikListe = _rasyonDataServices.CiftlikGetir();
-        //    List<SelectListItem> ciftlikList = (from i in ciftlikListe
-        //                                        select new SelectListItem
-        //                                        {
-        //                                            Text = i.CIFTLIKADI,
-        //                                            Value = i.CIFTLIKNO.ToString(),
+        [HttpGet]
+        public IActionResult RasyonBosDetayEkle(int id)
+        {
+            List<Ciftlik> ciftlikListe = _rasyonDataServices.CiftlikGetir();
+            List<SelectListItem> ciftlikList = (from i in ciftlikListe
+                                                select new SelectListItem
+                                                {
+                                                    Text = i.CIFTLIKADI,
+                                                    Value = i.CIFTLIKNO.ToString(),
 
 
-        //                                        }).ToList();
-        //    ViewBag.ciftlik = ciftlikList;
-        //    List<Urun> urunListe = _rasyonDataServices.UrunGetir();
-        //    List<SelectListItem> UrunList = (from i in urunListe
-        //                                     select new SelectListItem
-        //                                     {
-        //                                         Text = i.EMTIAAD,
-        //                                         Value = i.EMTIANO.ToString(),
+                                                }).ToList();
+            ViewBag.ciftlik = ciftlikList;
+            List<Urun> urunListe = _rasyonDataServices.UrunGetir();
+            List<SelectListItem> UrunList = (from i in urunListe
+                                             select new SelectListItem
+                                             {
+                                                 Text = i.EMTIAAD,
+                                                 Value = i.EMTIANO.ToString(),
 
 
-        //                                     }).ToList();
-        //    ViewBag.urun = UrunList;
-        //    List<Urun> emtiaListe = _rasyonDataServices.EmtiaGetir();
-        //    List<SelectListItem> emtiaList = (from i in emtiaListe
-        //                                      select new SelectListItem
-        //                                      {
-        //                                          Text = i.EMTIAAD,
-        //                                          Value = i.EMTIANO.ToString(),
+                                             }).ToList();
+            ViewBag.urun = UrunList;
+            List<Urun> emtiaListe = _rasyonDataServices.EmtiaGetir();
+            List<SelectListItem> emtiaList = (from i in emtiaListe
+                                              select new SelectListItem
+                                              {
+                                                  Text = i.EMTIAAD,
+                                                  Value = i.EMTIANO.ToString(),
 
 
-        //                                      }).ToList();
-        //    ViewBag.emtia = emtiaList;
-        //    int urunno = Convert.ToInt32(id.ToString().Substring(0, 6));
-        //    int ciftlikno = Convert.ToInt32(id.ToString().Substring(6));
-        //    List<RasyonDetay> data = _rasyonDataServices.GetListRasyonDetayById(urunno, ciftlikno);
-        //    return View(data);
-        //}
+                                              }).ToList();
+            ViewBag.emtia = emtiaList;
+            int urunno = Convert.ToInt32(id.ToString().Substring(0, 6));
+            int ciftlikno = Convert.ToInt32(id.ToString().Substring(6));
+            List<Rasyon> data = _rasyonDataServices.GetRasyonById(urunno, ciftlikno);
+            return View(data);
+        }
 
-        //[HttpPost]
+        [HttpPost]
+        public IActionResult RasyonBosDetayEkle(RasyonDetay rd)
+        {
+            _rasyonDataServices.RasyonDetayEkle(rd);
+            string no = "" + rd.URUNNO + rd.CIFTLIKNO;
+            return RedirectToAction("RasyonDetayList", new { id = no });
+        }
+
+
         public IActionResult RasyonDetayEkle(RasyonDetay rd)
         {
             _rasyonDataServices.RasyonDetayEkle(rd);

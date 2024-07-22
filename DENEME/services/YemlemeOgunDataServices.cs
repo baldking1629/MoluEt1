@@ -101,8 +101,9 @@ namespace MoluEt.services
         {
             OracleConnection connection = new OracleConnection(_connectionString);
             connection.Open();
+            int ogunsira = GetList().Max(o => o.OGUNSIRA) + 1;
             var command = connection.CreateCommand();
-            command.CommandText = $"INSERT INTO CFKTT004 (SIRKETNO,OGUNSIRA,ACIKLAMA) VALUES(1,{y.OGUNSIRA},'{y.ACIKLAMA}')";
+            command.CommandText = $"INSERT INTO CFKTT004 (SIRKETNO,OGUNSIRA,ACIKLAMA) VALUES(1,{ogunsira},'{y.ACIKLAMA}')";
             command.ExecuteNonQuery();
         }
 

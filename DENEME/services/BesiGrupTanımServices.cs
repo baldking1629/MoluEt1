@@ -72,7 +72,8 @@ namespace MoluEt
             OracleConnection connection = new OracleConnection(_connectionString);
             connection.Open();
             var command = connection.CreateCommand();
-            command.CommandText = $"INSERT INTO CFKTT003 (SIRKETNO,BESIGRUP,ACIKLAMA) VALUES(1,{h.BESIGRUP},'{h.ACIKLAMA}')";
+            int besigrup = GetList().Max(o => o.BESIGRUP) + 1;
+            command.CommandText = $"INSERT INTO CFKTT003 (SIRKETNO,BESIGRUP,ACIKLAMA) VALUES(1,{besigrup},'{h.ACIKLAMA}')";
             command.ExecuteNonQuery();
         }
 

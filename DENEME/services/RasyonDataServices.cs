@@ -92,6 +92,87 @@ namespace MoluEt.services
             }
             return rasyonlist;
         }
+
+        public List<Rasyon> GetRasyonById(int id, int ciftlikno)
+        {
+            List<Rasyon> rasyonlist = new List<Rasyon>();
+            using (OracleConnection connection = new OracleConnection(_connectionString))
+            {
+                connection.Open();
+
+                using (OracleCommand command = new OracleCommand("Select * from CFKMT003 where CIFTLIKNO=" + ciftlikno + " AND URUNNO=" + id, connection))
+                {
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Rasyon h = new Rasyon();
+                            h.SIRKETNO = reader.GetInt32(0);
+                            h.CIFTLIKNO = reader.GetInt32(1);
+                            h.URUNNO = reader.GetInt32(2);
+
+
+
+
+                            if (reader.IsDBNull(3)) { h.MIKTAR = null; }
+                            else { h.MIKTAR = reader.GetDecimal(3); }
+
+                            if (reader.IsDBNull(4)) { h.ACIKLAMA = null; }
+                            else { h.ACIKLAMA = reader.GetString(4); }
+
+                            if (reader.IsDBNull(5)) { h.INP_USER = null; }
+                            else { h.INP_USER = reader.GetString(5); }
+
+                            if (reader.IsDBNull(6)) { h.INP_DATE = null; }
+                            else { h.INP_DATE = reader.GetString(6); }
+
+                            if (reader.IsDBNull(7)) { h.UDP_USER = null; }
+                            else { h.UDP_USER = reader.GetString(7); }
+
+                            if (reader.IsDBNull(8)) { h.UDP_DATE = null; }
+                            else { h.UDP_DATE = reader.GetString(8); }
+
+                            if (reader.IsDBNull(9)) { h.TARIH = null; }
+                            else { h.TARIH = reader.GetString(9); }
+
+                            if (reader.IsDBNull(10)) { h.TUTAR = null; }
+                            else { h.TUTAR = reader.GetDecimal(10); }
+                            using (OracleCommand command1 = new OracleCommand("Select CIFTLIKADI from CFKMT001 where CIFTLIKNO=" + h.CIFTLIKNO, connection))
+                            {
+                                using (OracleDataReader reader1 = command1.ExecuteReader())
+                                {
+                                    while (reader1.Read())
+                                    {
+                                        if (reader1.IsDBNull(0)) { h.CIFTLIKADI = null; }
+                                        else { h.CIFTLIKADI = reader1.GetString(0); }
+                                    }
+                                }
+
+                            }
+                            using (OracleCommand command2 = new OracleCommand("SELECT EMTIAAD FROM STOKM001 WHERE EMTIANO =" + h.URUNNO, connection))
+                            {
+                                using (OracleDataReader reader2 = command2.ExecuteReader())
+                                {
+                                    while (reader2.Read())
+                                    {
+                                        if (reader2.IsDBNull(0)) { h.URUNACIKLAMA = null; }
+                                        else { h.URUNACIKLAMA = reader2.GetString(0); }
+                                    }
+                                }
+
+                            }
+
+                            rasyonlist.Add(h);
+                        }
+
+                    }
+                }
+
+
+
+            }
+            return rasyonlist;
+        }
         public List<RasyonDetay> GetListRasyonDetayById(int id, int ciftlikno)
         {
             List<RasyonDetay> rasyonlist = new List<RasyonDetay>();
@@ -206,7 +287,17 @@ namespace MoluEt.services
             OracleConnection connection = new OracleConnection(_connectionString);
             connection.Open();
             var command = connection.CreateCommand();
-            command.CommandText = $"INSERT INTO CFKDT003 (SIRKETNO,CIFTLIKNO,URUNNO,SIRANO,EMTIANO,MIKTAR) VALUES(1,{r.CIFTLIKNO},{r.URUNNO},{(GetListRasyonDetayById(r.URUNNO, r.CIFTLIKNO)[GetListRasyonDetayById(r.URUNNO, r.CIFTLIKNO).Count - 1].SIRANO) + 1},{r.EMTIANO},{r.MIKTAR})";
+            int sirano;
+            if (GetListRasyonDetayById(r.URUNNO, r.CIFTLIKNO).Count == 0)
+            {
+                sirano = 1;
+            }
+            else
+            {
+                sirano = GetListRasyonDetayById(r.URUNNO, r.CIFTLIKNO).Max(o => o.SIRANO) + 1;
+            }
+
+            command.CommandText = $"INSERT INTO CFKDT003 (SIRKETNO,CIFTLIKNO,URUNNO,SIRANO,EMTIANO,MIKTAR) VALUES(1,{r.CIFTLIKNO},{r.URUNNO},{sirano},{r.EMTIANO},{r.MIKTAR})";
             command.ExecuteNonQuery();
         }
         public List<Ciftlik> CiftlikGetir()
