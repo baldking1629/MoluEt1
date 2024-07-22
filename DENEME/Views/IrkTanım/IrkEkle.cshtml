@@ -1,0 +1,54 @@
+﻿@model MoluEt.Models.IrkTanım
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Irk Tanımı Kayıt</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <h2>Irk Tanımı Kayıt</h2>
+
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+        {
+            <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        }
+
+        <form asp-action="IrkEkle" asp-controller="IrkTanım" method="post">
+            <div class="form-group">
+                <label asp-for="IRK_NO">Irk Numarası:</label>
+                <input asp-for="IRK_NO" class="form-control" />
+                <span asp-validation-for="IRK_NO" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IRK_ADI">Irk Adı:</label>
+                <input asp-for="IRK_ADI" class="form-control" />
+                <span asp-validation-for="IRK_ADI" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ULKE_ADI">Ülke Adı:</label>
+                <input asp-for="ULKE_ADI" class="form-control" />
+                <span asp-validation-for="ULKE_ADI" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ACIKLAMA">Açıklama:</label>
+                <input asp-for="ACIKLAMA" class="form-control" />
+                <span asp-validation-for="ACIKLAMA" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+﻿@* @model System.Data.DataTable
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Irk Tanımları</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+            .button-container button {
+                padding: 10px 20px;
+                margin-right: 10px;
+                cursor: pointer;
+                border: none;
+                border-radius: 5px;
+                color: #fff;
+                background-color: #4CAF50;
+                transition: background-color 0.3s ease;
+            }
+
+                .button-container button:hover {
+                    background-color: #45a049;
+                }
+
+            .button-container .update-button {
+                background-color: #008CBA;
+            }
+
+                .button-container .update-button:hover {
+                    background-color: #007bb5;
+                }
+
+            .button-container .delete-button {
+                background-color: #f44336;
+            }
+
+                .button-container .delete-button:hover {
+                    background-color: #da190b;
+                }
+    </style>
+</head>
+<body>
+    <h1>Irk Tanımları Listesi</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>IRK NO</th>
+                <th>IRK ADI</th>
+                <th>ULKE ADI</th>
+                <th>ACIKLAMA</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    <td>@row["IRK_NO"]</td>
+                    <td>@row["IRK_ADI"]</td>
+                    <td>@row["ULKE_ADI"]</td>
+                    <td>@row["ACIKLAMA"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button onclick="window.location.href='@Url.Action("IrkEkle", "IrkTanım")'">Ekle</button>
+        <button class="update-button" onclick="window.location.href='@Url.Action("IrkDüzenle", "IrkTanım")'">Düzenle</button>
+    </div>
+</body>
+</html>
+ *@

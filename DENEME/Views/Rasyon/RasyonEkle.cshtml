@@ -1,0 +1,30 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "RasyonEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="RasyonEkle" asp-controller="Rasyon" method="post">
+
+    @Html.DropDownList("CIFTLIKNO", (List<SelectListItem>)ViewBag.ciftlik)
+
+    @Html.DropDownList("URUNNO", (List<SelectListItem>)ViewBag.urun)
+
+    <input placeholder="Miktar" class="input-group" name="MIKTAR" />
+
+    <input placeholder="Açıklama" class="input-group" name="ACIKLAMA" />
+
+
+    @* @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia)
+
+    <input placeholder="Miktar" class="input-group" name="MIKTAREMTIA" /> *@
+
+    <button asp-action="RasyonEkle" asp-controller="Rasyon">Rasyon Ekle</button>
+
+</form>
+
+
+
+

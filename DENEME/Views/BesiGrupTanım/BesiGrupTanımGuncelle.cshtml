@@ -1,0 +1,92 @@
+﻿@model DENEME.Models.BesiGrup
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Besi Grup Tanımı Güncelle</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
+        }
+
+            .page-header h1 {
+                font-size: 1.75rem; /* Font size for the title */
+                margin: 0; /* Remove margin */
+            }
+
+        .btn-primary {
+            font-size: 1.25rem; /* Increased font size for buttons */
+        }
+
+        .title-box {
+            border: 2px solid #343a40; /* Border color */
+            padding: 10px 20px; /* Padding inside the box */
+            margin-bottom: 20px; /* Bottom margin */
+            text-align: center; /* Center align text */
+            color: #fff; /* Text color */
+            background-color: #343a40; /* Background color */
+        }
+
+        .card-title {
+            font-size: 1.75rem; /* Increased font size for card title */
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header title-box">
+            <h1 class="m-0">Besi Grup Tanımı Güncelle</h1>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Besi Grup Bilgileri</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="BesiGrupTanımGuncelle" asp-controller="BesiGrupTanım" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="besiGrupNo">Besi Grup No</label>
+                                <input type="text" class="form-control" id="besiGrupNo" name="BESIGRUP" value="@Model.BESIGRUP" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="aciklama">Açıklama</label>
+                                <input type="text" class="form-control" id="aciklama" name="ACIKLAMA" value="@Model.ACIKLAMA">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Besi Grup Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.wrapper -->
+</body>
+</html>

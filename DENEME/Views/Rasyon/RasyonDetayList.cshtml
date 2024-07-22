@@ -1,0 +1,70 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<MoluEt.Models.RasyonDetay>
+@{
+    ViewData["Title"] = "RasyonDetayList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Çiftlik no: @Model[0].CIFTLIKNO @Model[0].CIFTLIKADI </h2>
+<h2>Rasyon Ürünü: @Model[0].URUNNO @Model[0].URUNADI  </h2>
+<h2>Birim üretim Miktarı: @Model[0].BRMMIKTAR</h2>
+<h2>Açıklama: @Model[0].ACIKLAMA</h2>
+
+<form asp-action="RasyonDetayEkle" asp-controller="Rasyon" method="post">
+    <table class="table table-bordered">
+        <tr>
+            <th>Sıra No</th>
+            <th>Kullanılan Ürün No</th>
+            <th>Kullanılan Ürün Adı</th>
+            <th>Birim</th>
+            <th>Kullanılan Miktar</th>
+            <th>Fiyat</th>
+            <th>Tutar</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.SIRANO</td>
+                <td>@item.EMTIANO</td>
+                <td>@item.EMTIAADI</td>
+                <td>KG</td>
+                <td>@item.MIKTAR</td>
+                <td>@item.FIYAT</td>
+                <td></td>
+            </tr>
+        }
+
+
+
+        <td><input name="SIRANO" value="" disabled="disabled" /></td>
+        <td></td>
+
+        <td>
+            @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia)
+
+        </td>
+        <td><label>KG</label></td>
+        <td><input name="MIKTAR" value="" /></td>
+        <td><input name="FIYAT" value="" /></td>
+        <td></td>
+        <br />
+        <input name="CIFTLIKNO" value=@Model[0].CIFTLIKNO hidden="hidden" />
+        <input name="URUNNO" value=@Model[0].URUNNO hidden="hidden" />
+
+    </table>
+    <button asp-action="RasyonDetayEkle" asp-controller="Rasyon" class="btn btn-danger">Rasyon Ekle</button>
+</form>
+@{
+    decimal? topmik = 0;
+    foreach (var item in Model)
+    {
+        topmik = topmik + item.MIKTAR;
+    }
+}
+
+<label>Toplam Miktar @topmik </label>
+

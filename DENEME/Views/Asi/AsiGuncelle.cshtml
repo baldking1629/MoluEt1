@@ -1,0 +1,24 @@
+﻿@model MoluEt.Models.Asi
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AsiGuncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="AsiGuncelle" asp-controller="Asi" method="post">
+
+    <label style="width:100px">Aşı No</label><input style="width:350px" class="input-group-lg" name="ASİ_NO" value="@Model.ASI_NO" />
+    <br />
+    <label style="width:100px">Aşı Adi</label><input style="width:350px" name="ASI_ADI" value="@Model.ASI_ADI" />
+    <br />
+    <label style="width:100px">Yapılan ay</label><input style="width:350px" name="YAP_AY" value="@Model.YAP_AY" />
+    <br />
+    <label style="width:100px">Açıklama</label><input style="width:350px" name="ACIKLAMA" value="@Model.ACIKLAMA" /><br />
+
+    <br />
+
+    <button asp-action="AsiGuncelle" asp-controller="Asi">Aşı Güncelle</button>
+</form>
+

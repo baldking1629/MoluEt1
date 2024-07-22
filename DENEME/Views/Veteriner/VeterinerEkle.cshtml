@@ -1,0 +1,61 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "VeterinerEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="VeterinerEkle" asp-controller="Veteriner" method="post">
+
+    <input placeholder="Veteriner No" class="input-group-lg" name="VET_NO" />
+
+    <input placeholder="Veteriner Adi" class="input-group" name="VET_ADI" />
+
+    <input placeholder="İş Giriş Tarihi" class="input-group" name="IS_GIR_TARIH" />
+    <input placeholder="Adres" class="input-group" name="ADRES" />
+
+    @Html.DropDownList("ADRES_IL", (List<SelectListItem>)ViewBag.il, new { id = "ilDropdown" })
+
+    <select id="ilceDropdown" name="ADRES_ILCE">
+        <option value="">İlçe Seçiniz</option>
+    </select>
+
+    <input placeholder="TC no" class="input-group" name="TC_NO" />
+
+    <input placeholder="Telefon" class="input-group" name="TELEFON" />
+    <input placeholder="Doğum Tarihi" class="input-group" name="DOG_TARIH" />
+    <input placeholder="İş bitiş tarihi" class="input-group" name="ISBITIS_TARIH" />
+
+
+    <button asp-action="VeterinerEkle" asp-controller="Veteriner">Veteriner Ekle</button>
+</form>
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ilDropdown").change(function () {
+                var ilId = $(this).val();
+                if (ilId) {
+                    $.ajax({
+                        url: '@Url.Action("GetIlcelerByIlId", "Veteriner")',
+                        type: "GET",
+                        data: { ilId: ilId },
+                        success: function (data) {
+                            var ilceDropdown = $("#ilceDropdown");
+                            ilceDropdown.empty();
+                            ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
+                            $.each(data, function (index, item) {
+                                ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $("#ilceDropdown").empty();
+                    $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
+                }
+            });
+        });
+    </script>
+}
+

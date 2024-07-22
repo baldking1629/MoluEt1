@@ -1,0 +1,23 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "AsiEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="AsiEkle" asp-controller="Asi" method="post">
+
+    <input placeholder="Aşı No" class="input-group-lg" name="ASI_NO" />
+
+    <input placeholder="Aşı Adi" class="input-group" name="ASI_ADI" />
+
+    <input placeholder="Yapılan ay" class="input-group" name="YAP_AY" />
+    <input placeholder="Açıklama" class="input-group" name="ACIKLAMA" />
+
+
+
+    <button asp-action="AsiEkle" asp-controller="Asi">Aşı Ekle</button>
+</form>
+

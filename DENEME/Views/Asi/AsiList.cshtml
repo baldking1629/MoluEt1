@@ -1,0 +1,33 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<MoluEt.Models.Asi>
+@{
+    ViewData["Title"] = "AsiList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>Aşı No</th>
+        <th>Aşı Adi</th>
+        <th>Yapıldığı Ay</th>
+        <th>Açıklama</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.ASI_NO</td>
+            <td><a href="~/Asi/AsiGuncelle/@item.ASI_NO">@item.ASI_ADI</a></td>
+            <td>@item.YAP_AY</td>
+            <td>@item.ACIKLAMA</td>
+        </tr>
+    }
+
+
+</table>
+<a href="~/Asi/AsiEkle" class="btn btn-danger">Asi Ekle</a>

@@ -1,0 +1,94 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model MoluEt.Models.Ciftlik
+@{
+    ViewData["Title"] = "CiftlikGuncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="CiftlikGuncelle" asp-controller="Ciftlik" method="post">
+
+    <label style="width:100px">Ciftlik No</label> <input class="input-group-lg" style="width:350px" value="@Model.CIFTLIKNO" name="CIFTLIKNO" />
+    <br />
+    <label style="width:100px">Ciftlik Adi</label> <input class="input-group-sm" style="width:350px" value="@Model.CIFTLIKADI" name="CIFTLIKADI" />
+    <br />
+    <label style="width:100px">İşletme No</label> <input class="input-group-sm" style="width:350px" value="@Model.ISLETMENO" name="ISLETMENO" /><br />
+    <label style="width:100px">Ruhsat No</label> <input class="input-group-sm" style="width:350px" value="@Model.RUHSATNO" name="RUHSATNO" /><br />
+    <label style="width:100px">Adres</label> <input class="input-group-sm" style="width:350px" value="@Model.ADRES" name="ADRES" /><br />
+    <label style="width:100px">İl/İlçe</label>
+    <select id="ilDropdown" name="IL">
+        @foreach (var item in (List<SelectListItem>)ViewBag.il)
+        {
+            if (Model.IL == item.Value)
+            {
+                <option value=@item.Value selected="selected">
+                    @item.Text
+                </option>
+            }
+            else
+            {
+                <option value=@item.Value>@item.Text</option>
+            }
+
+        }
+    </select>
+
+    <select id="ilceDropdown" name="ILCE">
+        @foreach (var item in (List<SelectListItem>)ViewBag.ilce)
+        {
+            if (Model.ILCE == item.Value)
+            {
+                <option value=@item.Value selected="selected">
+                    @item.Text
+                </option>
+            }
+            else
+            {
+                <option value=@item.Value>@item.Text</option>
+            }
+
+        }
+    </select>
+    <br />
+    <label style="width:100px">Telefon</label> <input style="width:350px" value="@Model.TELEFON" name="TELEFON" /><br />
+    <label style="width:100px">Faks</label><input class="input-group-sm" style="width:350px" value="@Model.FAX" name="FAX" /><br />
+    <label style="width:100px">Mail Adresi</label><input class="input-group-sm" style="width:350px" value="@Model.E_MAIL" name="E_MAIL" /><br />
+    <label style="width:100px">Vergi Dairesi</label><input class="input-group-sm" style="width:350px" value="@Model.VERGI_DAIRESI" name="VERGI_DAIRESI" /><br />
+    <label style="width:100px">Vergi No</label><input class="input-group-sm" style="width:350px" value="@Model.VERGI_NO" name="VERGI_NO" /><br />
+    <label style="width:100px">Depo No</label><input class="input-group-sm" style="width:350px" value="@Model.DEPONO" name="DEPONO" /><br />
+
+    <button asp-action="CiftlikGuncelle" asp-controller="Ciftlik">Ciftlik Güncelle</button>
+
+
+
+</form>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ilDropdown").change(function () {
+                var ilId = $(this).val();
+                if (ilId) {
+                    $.ajax({
+                        url: '@Url.Action("GetIlcelerByIlId", "Ciftlik")',
+                        type: "GET",
+                        data: { ilId: ilId },
+                        success: function (data) {
+                            var ilceDropdown = $("#ilceDropdown");
+                            ilceDropdown.empty();
+                            ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
+                            $.each(data, function (index, item) {
+                                ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $("#ilceDropdown").empty();
+                    $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
+                }
+            });
+        });
+    </script>
+}

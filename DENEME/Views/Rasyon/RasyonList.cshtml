@@ -1,0 +1,37 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<MoluEt.Models.Rasyon>
+@{
+    ViewData["Title"] = "RasyonList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>Çiftlik No</th>
+        <th>Çiftlik Adi</th>
+        <th>Rasyon Ürün No</th>
+        <th>Açıklama</th>
+        <th>Açıklama</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.CIFTLIKNO</td>
+            <td>@item.CIFTLIKADI</td>
+            <td>@item.URUNNO</td>
+            <td><a href="~/Rasyon/RasyonDetayList/@item.URUNNO@item.CIFTLIKNO">@item.URUNACIKLAMA</a></td>
+            <td>@item.ACIKLAMA</td>
+        </tr>
+    }
+
+
+
+
+</table>
+
+<a href="~/Rasyon/RasyonEkle" class="btn btn-danger">Rasyon Ekle</a>

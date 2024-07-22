@@ -1,0 +1,90 @@
+﻿@model MoluEt.Models.Veteriner
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "VeterinerGuncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="VeterinerGuncelle" asp-controller="Veteriner" method="post">
+
+    <label style="width:100px">Veteriner No</label><input style="width:350px" class="input-group-lg" name="VET_NO" value="@Model.VET_NO" />
+    <br />
+    <label style="width:100px">Veteriner Adi</label><input style="width:350px" name="VET_ADI" value="@Model.VET_ADI" />
+    <br />
+    <label style="width:100px">İş Giriş Tarihi</label><input style="width:350px" name="IS_GIR_TARIH" value="@Model.IS_GIR_TARIH" /><br />
+    <label style="width:100px">Adres</label><input style="width:350px" name="ADRES" value="@Model.ADRES" /><br />
+
+    <label style="width:100px">İl/İlçe</label>
+    <select id="ilDropdown" name="ADRES_IL">
+        @foreach (var item in (List<SelectListItem>)ViewBag.il)
+        {
+            if (Model.ADRES_IL == Convert.ToInt32(item.Value))
+            {
+                <option value=@item.Value selected="selected">
+                    @item.Text
+                </option>
+            }
+            else
+            {
+                <option value=@item.Value>@item.Text</option>
+            }
+
+        }
+    </select>
+
+    <select id="ilceDropdown" name="ADRES_ILCE">
+        @foreach (var item in (List<SelectListItem>)ViewBag.ilce)
+        {
+            if (Model.ADRES_ILCE == Convert.ToInt32(item.Value))
+            {
+                <option value=@item.Value selected="selected">
+                    @item.Text
+                </option>
+            }
+            else
+            {
+                <option value=@item.Value>@item.Text</option>
+            }
+
+        }
+    </select>
+    <br />
+    <label style="width:100px">TC no</label><input style="width:350px" name="TC_NO" value="@Model.TC_NO" /><br />
+    <label style="width:100px">Telefon</label><input style="width:350px" name="TELEFON" value="@Model.TELEFON" /><br />
+    <label style="width:100px">Doğum Tarihi</label><input style="width:350px" name="DOG_TARIH" value="@Model.DOG_TARIH" /><br />
+    <label style="width:100px">İş bitiş tarihi</label><input style="width:350px" name="ISBITIS_TARIH" value="@Model.ISBITIS_TARIH" /><br />
+    <br />
+
+    <button asp-action="VeterinerGuncelle" asp-controller="Veteriner">Veteriner Güncelle</button>
+</form>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ilDropdown").change(function () {
+                var ilId = $(this).val();
+                if (ilId) {
+                    $.ajax({
+                        url: '@Url.Action("GetIlcelerByIlId", "Ciftlik")',
+                        type: "GET",
+                        data: { ilId: ilId },
+                        success: function (data) {
+                            var ilceDropdown = $("#ilceDropdown");
+                            ilceDropdown.empty();
+                            ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
+                            $.each(data, function (index, item) {
+                                ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $("#ilceDropdown").empty();
+                    $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
+                }
+            });
+        });
+    </script>
+}
