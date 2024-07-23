@@ -149,5 +149,11 @@ namespace MoluEt.Controllers
             string no = "" + rd.URUNNO + rd.CIFTLIKNO;
             return RedirectToAction("RasyonDetayList", new { id = no });
         }
+
+        public IActionResult RasyonDetaySil(int ciftlikno,int urunno,int sirano)
+        {
+            _rasyonDataServices.RasyonDetaySil(ciftlikno, urunno, sirano);
+            return RedirectToAction("RasyonDetayList", new {id = "" + urunno + ciftlikno} );
+        }
     }
 }

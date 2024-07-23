@@ -1,4 +1,5 @@
-﻿using MoluEt.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MoluEt.Models;
 using Oracle.ManagedDataAccess.Client;
 
 namespace MoluEt.services
@@ -298,6 +299,14 @@ namespace MoluEt.services
             }
 
             command.CommandText = $"INSERT INTO CFKDT003 (SIRKETNO,CIFTLIKNO,URUNNO,SIRANO,EMTIANO,MIKTAR) VALUES(1,{r.CIFTLIKNO},{r.URUNNO},{sirano},{r.EMTIANO},{r.MIKTAR})";
+            command.ExecuteNonQuery();
+        }
+        public void RasyonDetaySil(int ciftlikno,int urunno, int sirano)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"DELETE FROM CFKDT003 WHERE CIFTLIKNO={ciftlikno} AND URUNNO={urunno} AND SIRANO={sirano}";
             command.ExecuteNonQuery();
         }
         public List<Ciftlik> CiftlikGetir()

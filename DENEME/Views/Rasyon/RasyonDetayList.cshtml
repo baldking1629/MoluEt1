@@ -22,6 +22,7 @@
             <th>Kullanılan Miktar</th>
             <th>Fiyat</th>
             <th>Tutar</th>
+            <th>İşlemler</th>
         </tr>
 
         @foreach (var item in Model)
@@ -35,6 +36,8 @@
                 <td>@item.MIKTAR</td>
                 <td>@item.FIYAT</td>
                 <td></td>
+                <td><a class="btn btn-danger" href="@Url.Action("RasyonDetaySil", "Rasyon", new { ciftlikno = item.CIFTLIKNO, urunno = item.URUNNO, sirano = item.SIRANO })">Sil</a></td>
+
             </tr>
         }
 
@@ -42,7 +45,6 @@
 
         <td><input name="SIRANO" value="" disabled="disabled" /></td>
         <td></td>
-
         <td>
             @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia)
 
