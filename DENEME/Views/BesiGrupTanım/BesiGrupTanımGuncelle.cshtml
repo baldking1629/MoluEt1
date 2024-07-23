@@ -47,6 +47,13 @@
         .card-title {
             font-size: 1.75rem; /* Increased font size for card title */
         }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 20px; /* Spacing above the buttons */
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -76,11 +83,17 @@
                                 <input type="text" class="form-control" id="aciklama" name="ACIKLAMA" value="@Model.ACIKLAMA">
                             </div>
                         </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Besi Grup Güncelle</button>
+
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+                            </div>
                         </div>
+                        
                     </form>
+
+                    
                 </div>
                 <!-- /.card -->
             </div><!-- /.container-fluid -->
@@ -88,5 +101,21 @@
         <!-- /.content -->
     </div>
     <!-- /.wrapper -->
+    <script>
+        function confirmDelete() {
+            if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Action("BesiGrupTanımSil", "BesiGrupTanım")';
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = '@Model.BESIGRUP';
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </body>
 </html>

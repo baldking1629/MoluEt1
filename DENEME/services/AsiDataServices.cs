@@ -132,5 +132,14 @@ namespace MoluEt.services
             command.CommandText = $"UPDATE CFKTT021 SET ASI_ADI = '{asi.ASI_ADI}',YAP_AY = {asi.YAP_AY},ACIKLAMA = '{asi.ACIKLAMA}' where ASI_NO={id}";
             command.ExecuteNonQuery();
         }
+
+        public void AsiSil(int id)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"DELETE FROM CFKTT021 WHERE ASI_NO={id}";
+            command.ExecuteNonQuery();
+        }
     }
 }

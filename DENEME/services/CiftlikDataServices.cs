@@ -202,6 +202,15 @@ public class CiftlikDataService
         command.ExecuteNonQuery();
     }
 
+    public void CiftlikSil(int id)
+    {
+        OracleConnection connection = new OracleConnection(_connectionString);
+        connection.Open();
+        var command = connection.CreateCommand();
+        command.CommandText = $"DELETE FROM CFKMT001 WHERE CIFTLIKNO={id}";
+        command.ExecuteNonQuery();
+    }
+
 }
 
 

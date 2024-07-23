@@ -114,6 +114,13 @@ namespace MoluEt.Controllers
             return Json(ilceList);
         }
 
+        [HttpPost]
+        public IActionResult CiftlikSil(int id)
+        {
+            _ciftlikDataService.CiftlikSil(id);
+            return RedirectToAction("CiftlikList");
+        }
+
 
     }
 }

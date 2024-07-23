@@ -92,5 +92,12 @@ namespace MoluEt.Controllers
                             }).ToList();
             return Json(ilceList);
         }
+
+        [HttpPost]
+        public IActionResult VeterinerSil(int id)
+        {
+            _veterinerDataServices.VeterinerSil(id);
+            return RedirectToAction("VeterinerList");
+        }
     }
 }

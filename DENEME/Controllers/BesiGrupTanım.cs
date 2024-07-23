@@ -74,7 +74,6 @@ namespace MoluEt.Controllers
            
         }
 
-        [HttpPost]
         public IActionResult BesiGrupTanımSil(int id)
         {
             _besiGrupTanımServices.BesiGrupSil(id);

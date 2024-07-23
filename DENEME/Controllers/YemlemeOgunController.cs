@@ -46,6 +46,12 @@ namespace MoluEt.Controllers
             _yemlemeOgunDataServices.YemlemeOgunGuncelle(y, id);
             return RedirectToAction("YemlemeOgunList");
         }
+        [HttpPost]
+        public IActionResult YemlemeOgunSil(int id)
+        {
+            _yemlemeOgunDataServices.YemlemeOgunSil(id);
+            return RedirectToAction("YemlemeOgunList");
+        }
 
     }
 }

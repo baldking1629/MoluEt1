@@ -69,8 +69,11 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Irk Güncelle</button>
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -80,5 +83,21 @@
         <!-- /.content -->
     </div>
     <!-- /.wrapper -->
+    <script>
+        function confirmDelete() {
+            if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Action("IrkTanımSil", "IrkTanım")';
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = '@Model.IRK_NO';
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </body>
 </html>

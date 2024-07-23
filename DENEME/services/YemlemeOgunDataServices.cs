@@ -115,5 +115,13 @@ namespace MoluEt.services
             command.CommandText = $"UPDATE CFKTT004 SET ACIKLAMA='{y.ACIKLAMA}' where OGUNSIRA={id}";
             command.ExecuteNonQuery();
         }
+        public void YemlemeOgunSil(int id)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"DELETE FROM CFKTT004 WHERE OGUNSIRA={id}";
+            command.ExecuteNonQuery();
+        }
     }
 }

@@ -13,6 +13,27 @@
     <br />
     <label style="width:100px">Açıklama</label> <input style="width:350px" class="input-group-sm" name="ACIKLAMA" value=@Model.ACIKLAMA />
     <br />
-    <button asp-action="OgunGuncelle" asp-controller="YemlemeOgun">Öğün Güncelle</button>
+    <div class="card-footer">
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+            <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+        </div>
+    </div>
+    <script>
+        function confirmDelete() {
+            if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Action("YemlemeOgunSil", "YemlemeOgun")';
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = '@Model.OGUNSIRA';
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </form>
 

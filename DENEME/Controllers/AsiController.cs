@@ -43,5 +43,12 @@ namespace MoluEt.Controllers
             _asiDataServices.AsiGuncelle(asi, id);
             return RedirectToAction("AsiList");
         }
+
+        [HttpPost]
+        public IActionResult AsiSil(int id)
+        {
+            _asiDataServices.AsiSil(id);
+            return RedirectToAction("AsiList");
+        }
     }
 }

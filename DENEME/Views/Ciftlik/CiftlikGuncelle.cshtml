@@ -58,9 +58,28 @@
     <label style="width:100px">Vergi No</label><input class="input-group-sm" style="width:350px" value="@Model.VERGI_NO" name="VERGI_NO" /><br />
     <label style="width:100px">Depo No</label><input class="input-group-sm" style="width:350px" value="@Model.DEPONO" name="DEPONO" /><br />
 
-    <button asp-action="CiftlikGuncelle" asp-controller="Ciftlik">Ciftlik Güncelle</button>
-
-
+    <div class="card-footer">
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+            <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+        </div>
+    </div>
+    <script>
+        function confirmDelete() {
+            if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Action("CiftlikSil", "Ciftlik")';
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = '@Model.CIFTLIKNO';
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 
 </form>
 

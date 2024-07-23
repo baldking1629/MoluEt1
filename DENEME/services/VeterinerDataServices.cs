@@ -165,5 +165,14 @@ namespace MoluEt.services
             command.CommandText = $"UPDATE CFKTT002 SET VET_ADI = '{v.VET_ADI}',IS_GIR_TARIH = '{v.IS_GIR_TARIH}',ADRES = '{v.ADRES}',ADRES_IL = {Convert.ToInt32(v.ADRES_IL)},ADRES_ILCE = {Convert.ToInt32(v.ADRES_ILCE)},TELEFON = '{v.TELEFON}',TC_NO = '{v.TC_NO}',DOG_TARIH = '{v.DOG_TARIH}',ISBITIS_TARIH = '{v.ISBITIS_TARIH}' where VET_NO={id}";
             command.ExecuteNonQuery();
         }
+
+        public void VeterinerSil(int id)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"DELETE FROM CFKTT002 WHERE VET_NO={id}";
+            command.ExecuteNonQuery();
+        }
     }
 }

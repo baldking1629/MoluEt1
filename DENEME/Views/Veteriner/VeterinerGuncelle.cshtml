@@ -57,7 +57,28 @@
     <label style="width:100px">İş bitiş tarihi</label><input style="width:350px" name="ISBITIS_TARIH" value="@Model.ISBITIS_TARIH" /><br />
     <br />
 
-    <button asp-action="VeterinerGuncelle" asp-controller="Veteriner">Veteriner Güncelle</button>
+    <div class="card-footer">
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+            <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+        </div>
+    </div>
+    <script>
+        function confirmDelete() {
+            if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
+                var form = document.createElement('form');
+                form.method = 'post';
+                form.action = '@Url.Action("VeterinerSil", "Veteriner")';
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = '@Model.VET_NO';
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
 </form>
 
 @section Scripts {
