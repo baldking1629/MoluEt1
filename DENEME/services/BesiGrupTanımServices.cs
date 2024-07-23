@@ -106,10 +106,10 @@ namespace MoluEt
             {
                 connection.Open();
 
-                using (OracleCommand command = new OracleCommand("SELECT * FROM CFKTT003 WHERE BESIGRUP LIKE :searchTerm", connection))
+                using (OracleCommand command = new OracleCommand("SELECT * FROM CFKTT003 WHERE UPPER(ACIKLAMA) LIKE UPPER(:searchTerm) AND LOWER(ACIKLAMA) LIKE LOWER(:searchTerm)", connection))
                 {
                     
-                    command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm}%"));
+                    command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm.ToUpper()}%"));
 
                     using (OracleDataReader reader = command.ExecuteReader())
                     {
