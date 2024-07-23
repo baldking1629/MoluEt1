@@ -133,7 +133,7 @@ namespace MoluEt
             using (OracleConnection connection = new OracleConnection(_connectionString))
             {
                 connection.Open();
-                using (OracleCommand command = new OracleCommand("SELECT * FROM CFKTT005 WHERE IRK_NO LIKE :searchTerm", connection))
+                using (OracleCommand command = new OracleCommand("SELECT * FROM CFKTT005 WHERE UPPER(IRK_ADI) LIKE UPPER(:searchTerm) AND LOWER(IRK_ADI) LIKE LOWER(:searchTerm)", connection))
                 {
                     command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm}%"));
 

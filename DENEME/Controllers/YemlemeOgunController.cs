@@ -12,10 +12,22 @@ namespace MoluEt.Controllers
             return View();
         }
 
-        public IActionResult YemlemeOgunList()
+        public IActionResult YemlemeOgunList(string searchTerm)
         {
-            List<YemlemeOgun> yemlemelist = _yemlemeOgunDataServices.GetList();
-            return View(yemlemelist);
+            List<YemlemeOgun> YemlemeOgunGruplar;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Eğer arama terimi boşsa, tüm listeyi getir.
+                YemlemeOgunGruplar = _yemlemeOgunDataServices.GetList();
+            }
+            else
+            {
+                // Arama terimi varsa, arama yap.
+                YemlemeOgunGruplar = _yemlemeOgunDataServices.YemlemeOgunAra(searchTerm);
+            }
+
+            return View(YemlemeOgunGruplar);
         }
 
         [HttpGet]

@@ -211,6 +211,89 @@ public class CiftlikDataService
         command.ExecuteNonQuery();
     }
 
+    public List<Ciftlik> CiftlikAra(string searchTerm)
+    {
+        List<Ciftlik> ciftliklist = new List<Ciftlik>();
+
+        using (OracleConnection connection = new OracleConnection(_connectionString))
+        {
+            connection.Open();
+            using (OracleCommand command = new OracleCommand("SELECT * FROM CFKMT001 WHERE UPPER(CIFTLIKADI) LIKE UPPER(:searchTerm) AND LOWER(CIFTLIKADI) LIKE LOWER(:searchTerm)", connection))
+            {
+                command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm}%"));
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+
+
+                    while (reader.Read())
+                    {
+                        Ciftlik? ciftlik = new Ciftlik();
+
+                        ciftlik.SIRKETNO = reader.GetInt32(0);
+                        ciftlik.CIFTLIKNO = reader.GetInt32(1);
+                        if (reader.IsDBNull(2)) { ciftlik.CIFTLIKADI = null; }
+                        else { ciftlik.CIFTLIKADI = reader.GetString(2); }
+
+                        if (reader.IsDBNull(3)) { ciftlik.ADRES = null; }
+                        else { ciftlik.ADRES = reader.GetString(3); }
+
+                        if (reader.IsDBNull(4)) { ciftlik.ILCE = null; }
+                        else { ciftlik.ILCE = reader.GetString(4); }
+
+                        if (reader.IsDBNull(5)) { ciftlik.IL = null; }
+                        else { ciftlik.IL = reader.GetString(5); }
+
+                        if (reader.IsDBNull(6)) { ciftlik.TELEFON = null; }
+                        else { ciftlik.TELEFON = reader.GetString(6); }
+
+                        if (reader.IsDBNull(7)) { ciftlik.FAX = null; }
+                        else { ciftlik.FAX = reader.GetString(7); }
+
+                        if (reader.IsDBNull(8)) { ciftlik.E_MAIL = null; }
+                        else { ciftlik.E_MAIL = reader.GetString(8); }
+
+                        if (reader.IsDBNull(9)) { ciftlik.VERGI_DAIRESI = null; }
+                        else { ciftlik.VERGI_DAIRESI = reader.GetString(9); }
+
+                        if (reader.IsDBNull(10)) { ciftlik.VERGI_NO = null; }
+                        else { ciftlik.VERGI_NO = reader.GetString(10); }
+
+                        if (reader.IsDBNull(11)) { ciftlik.RESIM = null; }
+                        else { ciftlik.RESIM = reader.GetString(11); }
+
+                        if (reader.IsDBNull(12)) { ciftlik.DEPONO = null; }
+                        else { ciftlik.DEPONO = reader.GetInt32(12); }
+
+                        if (reader.IsDBNull(13)) { ciftlik.RUHSATNO = null; }
+                        else { ciftlik.RUHSATNO = reader.GetString(13); }
+
+                        if (reader.IsDBNull(14)) { ciftlik.ISLETMENO = null; }
+                        else { ciftlik.ISLETMENO = reader.GetString(14); }
+
+                        if (reader.IsDBNull(15)) { ciftlik.ISLETMEONAYNO = null; }
+                        else { ciftlik.ISLETMEONAYNO = reader.GetString(15); }
+
+                        if (reader.IsDBNull(16)) { ciftlik.INP_USER = null; }
+                        else { ciftlik.INP_USER = reader.GetString(16); }
+
+                        if (reader.IsDBNull(17)) { ciftlik.INP_DATE = null; }
+                        else { ciftlik.INP_DATE = reader.GetString(17); }
+
+                        if (reader.IsDBNull(18)) { ciftlik.UDP_USER = null; }
+                        else { ciftlik.UDP_USER = reader.GetString(18); }
+
+                        if (reader.IsDBNull(19)) { ciftlik.UDP_DATE = null; }
+                        else { ciftlik.UDP_DATE = reader.GetString(19); }
+                        ciftliklist.Add(ciftlik);
+                    }
+
+                }
+            }
+        }
+
+        return ciftliklist;
+    }
+
 }
 
 

@@ -14,10 +14,23 @@ namespace MoluEt.Controllers
         {
             return View();
         }
-        public IActionResult Irklistesi()
+        public IActionResult Irklistesi(string searchTerm)
         {
-            List<IrkTanım> IrkTanımlistesi = _IrKTanımServices.GetList();
-            return View(IrkTanımlistesi);
+            
+            List<IrkTanım> IrkGruplar;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Eğer arama terimi boşsa, tüm listeyi getir.
+                IrkGruplar = _IrKTanımServices.GetList();
+            }
+            else
+            {
+                // Arama terimi varsa, arama yap.
+                IrkGruplar = _IrKTanımServices.IrkAra(searchTerm);
+            }
+
+            return View(IrkGruplar);
         }
         [HttpGet]
         public IActionResult IrkTanımEkle()

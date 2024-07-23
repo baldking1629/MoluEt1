@@ -14,10 +14,22 @@ namespace MoluEt.Controllers
         {
             return View();
         }
-        public IActionResult VeterinerList()
+        public IActionResult VeterinerList(string searchTerm)
         {
-            List<Veteriner>? data = _veterinerDataServices.GetList();
-            return View(data);
+            List<Veteriner> VeterinerGruplar;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Eğer arama terimi boşsa, tüm listeyi getir.
+                VeterinerGruplar = _veterinerDataServices.GetList();
+            }
+            else
+            {
+                // Arama terimi varsa, arama yap.
+                VeterinerGruplar = _veterinerDataServices.VeterinerAra(searchTerm);
+            }
+
+            return View(VeterinerGruplar);
 
         }
 

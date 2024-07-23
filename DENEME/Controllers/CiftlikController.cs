@@ -17,10 +17,22 @@ namespace MoluEt.Controllers
             return View();
         }
 
-        public IActionResult CiftlikList()
+        public IActionResult CiftlikList(string searchTerm)
         {
-            List<Ciftlik>? data = _ciftlikDataService.GetList();
-            return View(data);
+            List<Ciftlik> CiftlikGruplar;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Eğer arama terimi boşsa, tüm listeyi getir.
+                CiftlikGruplar = _ciftlikDataService.GetList();
+            }
+            else
+            {
+                // Arama terimi varsa, arama yap.
+                CiftlikGruplar = _ciftlikDataService.CiftlikAra(searchTerm);
+            }
+
+            return View(CiftlikGruplar);
         }
         [HttpGet]
         public IActionResult CiftlikEkle()

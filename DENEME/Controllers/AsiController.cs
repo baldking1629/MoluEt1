@@ -12,10 +12,22 @@ namespace MoluEt.Controllers
             return View();
         }
 
-        public IActionResult AsiList()
+        public IActionResult AsiList(string searchTerm)
         {
-            List<Asi> asilist = _asiDataServices.GetList();
-            return View(asilist);
+            List<Asi> AsiGruplar;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Eğer arama terimi boşsa, tüm listeyi getir.
+                AsiGruplar = _asiDataServices.GetList();
+            }
+            else
+            {
+                // Arama terimi varsa, arama yap.
+                AsiGruplar = _asiDataServices.AsiAra(searchTerm);
+            }
+
+            return View(AsiGruplar);
         }
 
         [HttpGet]

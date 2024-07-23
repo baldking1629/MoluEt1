@@ -13,10 +13,22 @@ namespace MoluEt.Controllers
             return View();
         }
 
-        public IActionResult HayvanNeviList()
+        public IActionResult HayvanNeviList(string searchTerm)
         {
-            List<HayvanNevi> hayvanlistesi = _HayvanNeviDataServices.GetList();
-            return View(hayvanlistesi);
+            List<HayvanNevi> HayvanNeviGruplar;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Eğer arama terimi boşsa, tüm listeyi getir.
+                HayvanNeviGruplar = _HayvanNeviDataServices.GetList();
+            }
+            else
+            {
+                // Arama terimi varsa, arama yap.
+                HayvanNeviGruplar = _HayvanNeviDataServices.HayvanNeviAra(searchTerm);
+            }
+
+            return View(HayvanNeviGruplar);
         }
 
         [HttpGet]

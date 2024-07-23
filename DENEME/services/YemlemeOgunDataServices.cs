@@ -123,5 +123,49 @@ namespace MoluEt.services
             command.CommandText = $"DELETE FROM CFKTT004 WHERE OGUNSIRA={id}";
             command.ExecuteNonQuery();
         }
+
+        public List<YemlemeOgun> YemlemeOgunAra(string searchTerm)
+        {
+            List<YemlemeOgun> yemlemelist = new List<YemlemeOgun>();
+
+            using (OracleConnection connection = new OracleConnection(_connectionString))
+            {
+                connection.Open();
+                using (OracleCommand command = new OracleCommand("Select * from CFKTT004 WHERE UPPER(ACIKLAMA) LIKE UPPER(:searchTerm) AND LOWER(ACIKLAMA) LIKE LOWER(:searchTerm)", connection))
+                {
+                    command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm}%"));
+                    using (OracleDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            YemlemeOgun y = new YemlemeOgun();
+                            y.SIRKETNO = reader.GetInt32(0);
+                            y.OGUNSIRA = reader.GetInt32(1);
+
+                            if (reader.IsDBNull(2)) { y.ACIKLAMA = null; }
+                            else { y.ACIKLAMA = reader.GetString(2); }
+
+                            if (reader.IsDBNull(3)) { y.INP_USER = null; }
+                            else { y.INP_USER = reader.GetString(3); }
+
+                            if (reader.IsDBNull(4)) { y.INP_DATE = null; }
+                            else { y.INP_DATE = reader.GetString(4); }
+
+                            if (reader.IsDBNull(5)) { y.UDP_USER = null; }
+                            else { y.UDP_USER = reader.GetString(5); }
+
+                            if (reader.IsDBNull(6)) { y.UDP_DATE = null; }
+                            else { y.UDP_DATE = reader.GetString(6); }
+                            yemlemelist.Add(y);
+
+                        }
+
+
+                    }
+                }
+            }
+            return yemlemelist;
+        }
     }
 }

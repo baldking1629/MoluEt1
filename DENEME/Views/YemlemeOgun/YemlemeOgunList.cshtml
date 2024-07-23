@@ -7,7 +7,19 @@
 }
 
 
-
+<form id="searchForm" method="get" action="~/YemlemeOgun/YemlemeOgunList" class="form-inline mb-4">
+    <div class="input-group input-group-md">
+        <input type="text" class="form-control form-control-search" name="searchTerm" placeholder="Öğün Açıklama ile ara..." aria-label="Search">
+        <div class="input-group-append">
+            <button class="btn btn-search" type="submit">
+                <i class="fas fa-search"></i> Ara
+            </button>
+        </div>
+    </div>
+    <div class="card-tools">
+        <a href="~/YemlemeOgun/YemlemeOgunList" class="btn btn-success">Yeni Öğün</a>
+    </div>
+</form>
 
 <table class="table table-bordered">
     <tr>

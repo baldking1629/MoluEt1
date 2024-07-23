@@ -109,7 +109,7 @@ namespace MoluEt
                 using (OracleCommand command = new OracleCommand("SELECT * FROM CFKTT003 WHERE UPPER(ACIKLAMA) LIKE UPPER(:searchTerm) AND LOWER(ACIKLAMA) LIKE LOWER(:searchTerm)", connection))
                 {
                     
-                    command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm.ToUpper()}%"));
+                    command.Parameters.Add(new OracleParameter("searchTerm", $"%{searchTerm}%"));
 
                     using (OracleDataReader reader = command.ExecuteReader())
                     {
