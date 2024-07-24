@@ -1,60 +1,178 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model dynamic
 @{
-    ViewData["Title"] = "VeterinerEkle";
+    ViewData["Title"] = "Veteriner Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- jQuery -->
+   @*  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> *@
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
 
-<form asp-action="VeterinerEkle" asp-controller="Veteriner" method="post">
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
+        }
 
+            .page-header h1 {
+                font-size: 1.75rem; /* Font size for the title */
+                margin: 0; /* Remove margin */
+            }
 
-    <input placeholder="Veteriner Adi" class="input-group" name="VET_ADI" />
+        .card {
+            border-radius: 0.25rem; /* Card border radius */
+        }
 
-    <input placeholder="İş Giriş Tarihi" class="input-group" name="IS_GIR_TARIH" />
-    <input placeholder="Adres" class="input-group" name="ADRES" />
+        .card-header {
+            background-color: #343a40; /* Card header background color */
+            color: #fff; /* Card header text color */
+        }
 
-    @Html.DropDownList("ADRES_IL", (List<SelectListItem>)ViewBag.il, new { id = "ilDropdown" })
+        .card-title {
+            font-size: 1.75rem; /* Font size for card title */
+        }
 
-    <select id="ilceDropdown" name="ADRES_ILCE">
-        <option value="">İlçe Seçiniz</option>
-    </select>
+        .form-control {
+            border-radius: 0.25rem; /* Input border radius */
+            border: 1px solid #ced4da; /* Input border color */
+            padding: 0.5rem 0.75rem; /* Input padding */
+            font-size: 1rem; /* Input font size */
+        }
 
-    <input placeholder="TC no" class="input-group" name="TC_NO" />
+        .card-footer {
+            text-align: right; /* Align button to the right */
+            padding: 20px; /* Padding inside the footer */
+        }
 
-    <input placeholder="Telefon" class="input-group" name="TELEFON" />
-    <input placeholder="Doğum Tarihi" class="input-group" name="DOG_TARIH" />
-    <input placeholder="İş bitiş tarihi" class="input-group" name="ISBITIS_TARIH" />
+        .btn-primary {
+            font-size: 1.25rem; /* Font size for buttons */
+            border-radius: 0.25rem; /* Button border radius */
+            background-color: #007bff; /* Button background color */
+            border: none;
+            padding: 0.5rem 1rem; /* Button padding */
+        }
 
+            .btn-primary:hover {
+                background-color: #0056b3; /* Button background color on hover */
+            }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
 
-    <button asp-action="VeterinerEkle" asp-controller="Veteriner">Veteriner Ekle</button>
-</form>
-@section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#ilDropdown").change(function () {
-                var ilId = $(this).val();
-                if (ilId) {
-                    $.ajax({
-                        url: '@Url.Action("GetIlcelerByIlId", "Veteriner")',
-                        type: "GET",
-                        data: { ilId: ilId },
-                        success: function (data) {
-                            var ilceDropdown = $("#ilceDropdown");
-                            ilceDropdown.empty();
-                            ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
-                            $.each(data, function (index, item) {
-                                ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $("#ilceDropdown").empty();
-                    $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
-                }
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Veteriner Bilgileri</h3>
+                    </div>
+                    <form asp-action="VeterinerEkle" asp-controller="Veteriner" method="post">
+                        <div class="card-body">
+                            <!-- Form Fields -->
+                            <div class="form-group">
+                                <label for="VET_ADI">Veteriner Adı</label>
+                                <input placeholder="Veteriner Adı" class="form-control" id="VET_ADI" name="VET_ADI" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="IS_GIR_TARIH">İş Giriş Tarihi</label>
+                                <input placeholder="İş Giriş Tarihi" class="form-control" id="IS_GIR_TARIH" name="IS_GIR_TARIH" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ADRES">Adres</label>
+                                <input placeholder="Adres" class="form-control" id="ADRES" name="ADRES" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>İl</label>
+                                @Html.DropDownList("ADRES_IL", (List<SelectListItem>)ViewBag.il, new { @class = "form-control", id = "ilDropdown" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>İlçe</label>
+                                <select id="ilceDropdown" name="ADRES_ILCE" class="form-control">
+                                    <option value="">İlçe Seçiniz</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="TC_NO">TC No</label>
+                                <input placeholder="TC No" class="form-control" id="TC_NO" name="TC_NO" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="TELEFON">Telefon</label>
+                                <input placeholder="Telefon" class="form-control" id="TELEFON" name="TELEFON" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="DOG_TARIH">Doğum Tarihi</label>
+                                <input placeholder="Doğum Tarihi" class="form-control" id="DOG_TARIH" name="DOG_TARIH" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ISBITIS_TARIH">İş Bitiş Tarihi</label>
+                                <input placeholder="İş Bitiş Tarihi" class="form-control" id="ISBITIS_TARIH" name="ISBITIS_TARIH" />
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Veteriner Ekle</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    </div><!-- /.wrapper -->
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $("#ilDropdown").change(function () {
+                    var ilId = $(this).val();
+                    if (ilId) {
+                        $.ajax({
+                            url: '@Url.Action("GetIlcelerByIlId", "Veteriner")',
+                            type: "GET",
+                            data: { ilId: ilId },
+                            success: function (data) {
+                                var ilceDropdown = $("#ilceDropdown");
+                                ilceDropdown.empty();
+                                ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
+                                $.each(data, function (index, item) {
+                                    ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                                });
+                            }
+                        });
+                    } else {
+                        $("#ilceDropdown").empty();
+                        $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
+                    }
+                });
             });
-        });
-    </script>
-}
-
+        </script>
+    }
+</body>
+</html>

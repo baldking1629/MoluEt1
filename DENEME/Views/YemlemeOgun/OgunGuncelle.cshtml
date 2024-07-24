@@ -1,24 +1,114 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model MoluEt.Models.YemlemeOgun
+﻿@model MoluEt.Models.YemlemeOgun
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "OgunGuncelle";
+    ViewData["Title"] = "Öğün Güncelle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Öğün Güncelle</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- jQuery -->
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
+        }
 
+            .page-header h1 {
+                font-size: 1.75rem; /* Font size for the title */
+                margin: 0; /* Remove margin */
+            }
 
-<form asp-action="OgunGuncelle" asp-controller="YemlemeOgun" method="post">
+        .form-group label {
+            font-weight: bold; /* Font weight for labels */
+        }
 
-    <label style="width:100px">Öğün No</label> <input disabled="disabled" style="width:350px" class="input-group-lg" name="OGUNSIRA" value=@Model.OGUNSIRA />
-    <br />
-    <label style="width:100px">Açıklama</label> <input style="width:350px" class="input-group-sm" name="ACIKLAMA" value=@Model.ACIKLAMA />
-    <br />
-    <div class="card-footer">
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
-            <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+        .btn-primary, .btn-danger {
+            font-size: 1.25rem; /* Increased font size for buttons */
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px; /* Spacing between buttons */
+            margin-top: 20px; /* Spacing above the buttons */
+        }
+
+        .card-body {
+            margin-top: 20px; /* Spacing above the form */
+        }
+
+        .form-control {
+            font-size: 1rem; /* Font size for form controls */
+        }
+
+        .input-group-lg {
+            width: 100%; /* Full width for large inputs */
+        }
+
+        .input-group-sm {
+            width: 100%; /* Full width for small inputs */
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header title-box">
+            <h1 class="m-0">Öğün Güncelle</h1>
         </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Öğün Bilgileri</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="OgunGuncelle" asp-controller="YemlemeOgun" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ogunSira">Öğün No</label>
+                                <input type="text" class="form-control input-group-lg" id="ogunSira" name="OGUNSIRA" value="@Model.OGUNSIRA" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="aciklama">Açıklama</label>
+                                <input type="text" class="form-control input-group-sm" id="aciklama" name="ACIKLAMA" value="@Model.ACIKLAMA">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
+    <!-- /.wrapper -->
+
     <script>
         function confirmDelete() {
             if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
@@ -35,5 +125,5 @@
             }
         }
     </script>
-</form>
-
+</body>
+</html>

@@ -5,65 +5,169 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-<form asp-action="CiftlikGuncelle" asp-controller="Ciftlik" method="post">
-
-    <label style="width:100px">Ciftlik No</label> <input disabled="disabled" class="input-group-lg" style="width:350px" value="@Model.CIFTLIKNO" name="CIFTLIKNO" />
-    <br />
-    <label style="width:100px">Ciftlik Adi</label> <input class="input-group-sm" style="width:350px" value="@Model.CIFTLIKADI" name="CIFTLIKADI" />
-    <br />
-    <label style="width:100px">İşletme No</label> <input class="input-group-sm" style="width:350px" value="@Model.ISLETMENO" name="ISLETMENO" /><br />
-    <label style="width:100px">Ruhsat No</label> <input class="input-group-sm" style="width:350px" value="@Model.RUHSATNO" name="RUHSATNO" /><br />
-    <label style="width:100px">Adres</label> <input class="input-group-sm" style="width:350px" value="@Model.ADRES" name="ADRES" /><br />
-    <label style="width:100px">İl/İlçe</label>
-    <select id="ilDropdown" name="IL">
-        @foreach (var item in (List<SelectListItem>)ViewBag.il)
-        {
-            if (Model.IL == item.Value)
-            {
-                <option value=@item.Value selected="selected">
-                    @item.Text
-                </option>
-            }
-            else
-            {
-                <option value=@item.Value>@item.Text</option>
-            }
-
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ciftlik Güncelle</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
         }
-    </select>
 
-    <select id="ilceDropdown" name="ILCE">
-        @foreach (var item in (List<SelectListItem>)ViewBag.ilce)
-        {
-            if (Model.ILCE == item.Value)
-            {
-                <option value=@item.Value selected="selected">
-                    @item.Text
-                </option>
-            }
-            else
-            {
-                <option value=@item.Value>@item.Text</option>
-            }
-
+        .page-header h1 {
+            font-size: 1.75rem; /* Font size for the title */
+            margin: 0; /* Remove margin */
         }
-    </select>
-    <br />
-    <label style="width:100px">Telefon</label> <input style="width:350px" value="@Model.TELEFON" name="TELEFON" /><br />
-    <label style="width:100px">Faks</label><input class="input-group-sm" style="width:350px" value="@Model.FAX" name="FAX" /><br />
-    <label style="width:100px">Mail Adresi</label><input class="input-group-sm" style="width:350px" value="@Model.E_MAIL" name="E_MAIL" /><br />
-    <label style="width:100px">Vergi Dairesi</label><input class="input-group-sm" style="width:350px" value="@Model.VERGI_DAIRESI" name="VERGI_DAIRESI" /><br />
-    <label style="width:100px">Vergi No</label><input class="input-group-sm" style="width:350px" value="@Model.VERGI_NO" name="VERGI_NO" /><br />
-    <label style="width:100px">Depo No</label><input class="input-group-sm" style="width:350px" value="@Model.DEPONO" name="DEPONO" /><br />
 
-    <div class="card-footer">
-        <div class="button-container">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
-            <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+        .card-title {
+            font-size: 1.75rem; /* Increased font size for card title */
+        }
+
+        .form-control {
+            font-size: 1rem; /* Font size for inputs */
+        }
+
+        .btn-primary, .btn-danger {
+            font-size: 1.25rem; /* Increased font size for buttons */
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px; /* Spacing between buttons */
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header title-box">
+            <h1 class="m-0">Ciftlik Güncelle</h1>
         </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Ciftlik Bilgileri</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="CiftlikGuncelle" asp-controller="Ciftlik" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ciftlikNo">Ciftlik No</label>
+                                <input type="text" class="form-control" id="ciftlikNo" name="CIFTLIKNO" value="@Model.CIFTLIKNO" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="ciftlikAdi">Ciftlik Adi</label>
+                                <input type="text" class="form-control" id="ciftlikAdi" name="CIFTLIKADI" value="@Model.CIFTLIKADI">
+                            </div>
+                            <div class="form-group">
+                                <label for="isletmeNo">İşletme No</label>
+                                <input type="text" class="form-control" id="isletmeNo" name="ISLETMENO" value="@Model.ISLETMENO">
+                            </div>
+                            <div class="form-group">
+                                <label for="ruhsatNo">Ruhsat No</label>
+                                <input type="text" class="form-control" id="ruhsatNo" name="RUHSATNO" value="@Model.RUHSATNO">
+                            </div>
+                            <div class="form-group">
+                                <label for="adres">Adres</label>
+                                <input type="text" class="form-control" id="adres" name="ADRES" value="@Model.ADRES">
+                            </div>
+                            <div class="form-group">
+                                <label for="il">İl</label>
+                                <select id="ilDropdown" name="IL" class="form-control">
+                                    @foreach (var item in (List<SelectListItem>)ViewBag.il)
+                                    {
+                                        if (Model.IL == item.Value)
+                                        {
+                                            <option value=@item.Value selected="selected">
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@item.Value>@item.Text</option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ilce">İlçe</label>
+                                <select id="ilceDropdown" name="ILCE" class="form-control">
+                                    @foreach (var item in (List<SelectListItem>)ViewBag.ilce)
+                                    {
+                                        if (Model.ILCE == item.Value)
+                                        {
+                                            <option value=@item.Value selected="selected">
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@item.Value>@item.Text</option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefon">Telefon</label>
+                                <input type="text" class="form-control" id="telefon" name="TELEFON" value="@Model.TELEFON">
+                            </div>
+                            <div class="form-group">
+                                <label for="faks">Faks</label>
+                                <input type="text" class="form-control" id="faks" name="FAX" value="@Model.FAX">
+                            </div>
+                            <div class="form-group">
+                                <label for="mail">Mail Adresi</label>
+                                <input type="text" class="form-control" id="mail" name="E_MAIL" value="@Model.E_MAIL">
+                            </div>
+                            <div class="form-group">
+                                <label for="vergiDairesi">Vergi Dairesi</label>
+                                <input type="text" class="form-control" id="vergiDairesi" name="VERGI_DAIRESI" value="@Model.VERGI_DAIRESI">
+                            </div>
+                            <div class="form-group">
+                                <label for="vergiNo">Vergi No</label>
+                                <input type="text" class="form-control" id="vergiNo" name="VERGI_NO" value="@Model.VERGI_NO">
+                            </div>
+                            <div class="form-group">
+                                <label for="depoNo">Depo No</label>
+                                <input type="text" class="form-control" id="depoNo" name="DEPONO" value="@Model.DEPONO">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete();"><i class="fas fa-trash-alt"></i> Sil</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
+    <!-- /.wrapper -->
+
     <script>
         function confirmDelete() {
             if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
@@ -81,33 +185,33 @@
         }
     </script>
 
-</form>
-
-@section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#ilDropdown").change(function () {
-                var ilId = $(this).val();
-                if (ilId) {
-                    $.ajax({
-                        url: '@Url.Action("GetIlcelerByIlId", "Ciftlik")',
-                        type: "GET",
-                        data: { ilId: ilId },
-                        success: function (data) {
-                            var ilceDropdown = $("#ilceDropdown");
-                            ilceDropdown.empty();
-                            ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
-                            $.each(data, function (index, item) {
-                                ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $("#ilceDropdown").empty();
-                    $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
-                }
+    @section Scripts {
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#ilDropdown").change(function () {
+                    var ilId = $(this).val();
+                    if (ilId) {
+                        $.ajax({
+                            url: '@Url.Action("GetIlcelerByIlId", "Ciftlik")',
+                            type: "GET",
+                            data: { ilId: ilId },
+                            success: function (data) {
+                                var ilceDropdown = $("#ilceDropdown");
+                                ilceDropdown.empty();
+                                ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
+                                $.each(data, function (index, item) {
+                                    ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                                });
+                            }
+                        });
+                    } else {
+                        $("#ilceDropdown").empty();
+                        $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
+                    }
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }
+</body>
+</html>

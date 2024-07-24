@@ -1,68 +1,201 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model dynamic
 @{
-    ViewData["Title"] = "CiftlikEkle";
+    ViewData["Title"] = "Çiftlik Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- jQuery -->
+@*     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ *@    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
 
-<form asp-action="CiftlikEkle" asp-controller="Ciftlik" method="post">
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
+        }
 
+            .page-header h1 {
+                font-size: 1.75rem; /* Font size for the title */
+                margin: 0; /* Remove margin */
+            }
 
-    <input placeholder="Ciftlik Adi" class="input-group" name="CIFTLIKADI" />
+        .card {
+            border-radius: 0.25rem; /* Card border radius */
+        }
 
-    <input placeholder="İşletme No" class="input-group" name="ISLETMENO" />
-    <input placeholder="Ruhsat No" class="input-group" name="RUHSATNO" />
-    <input placeholder="Adres" class="input-group" name="ADRES" />
+        .card-header {
+            background-color: #343a40; /* Card header background color */
+            color: #fff; /* Card header text color */
+        }
 
+        .card-title {
+            font-size: 1.75rem; /* Font size for card title */
+        }
 
-    @Html.DropDownList("il", (List<SelectListItem>)ViewBag.il, new { id = "ilDropdown" })
+        .btn-primary {
+            font-size: 1.25rem; /* Font size for buttons */
+            border-radius: 0.25rem; /* Button border radius */
+        }
 
-    <select id="ilceDropdown" name="ILCE">
-        <option value="">İlçe Seçiniz</option>
-    </select>
+        .card-body {
+            padding: 20px; /* Padding inside the card body */
+        }
 
+        .form-group label {
+            font-weight: bold; /* Make labels bold */
+        }
 
+        .card-footer {
+            text-align: right; /* Align button to the right */
+            padding: 20px; /* Padding inside the footer */
+        }
 
+        .btn-primary {
+            background-color: #007bff; /* Button background color */
+            border: none;
+            padding: 0.5rem 1rem; /* Button padding */
+        }
 
+            .btn-primary:hover {
+                background-color: #0056b3; /* Button background color on hover */
+            }
 
+        .form-control {
+            border-radius: 0.25rem; /* Input border radius */
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
 
-    <input placeholder="Telefon" class="input-group" name="TELEFON" />
-    <input placeholder="Faks" class="input-group" name="FAX" />
-    <input placeholder="Mail Adresi" class="input-group" name="E_MAIL" />
-    <input placeholder="Vergi Dairesi" class="input-group" name="VERGI_DAIRESI" />
-    <input placeholder="Vergi No" class="input-group" name="VERGI_NO" />
-    <input placeholder="Depo No" class="input-group" name="DEPONO" />
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Çiftlik Bilgileri</h3>
+                    </div>
+                    <form asp-action="CiftlikEkle" asp-controller="Ciftlik" method="post">
+                        <div class="card-body">
+                            <!-- Form Fields -->
+                            <div class="form-group">
+                                <label for="CIFTLIKADI">Çiftlik Adı</label>
+                                <input placeholder="Çiftlik Adı" class="form-control" id="CIFTLIKADI" name="CIFTLIKADI" />
+                            </div>
 
-    <button asp-action="CiftlikEkle" asp-controller="Ciftlik">Ciftlik Ekle</button>
-</form>
+                            <div class="form-group">
+                                <label for="ISLETMENO">İşletme No</label>
+                                <input placeholder="İşletme No" class="form-control" id="ISLETMENO" name="ISLETMENO" />
+                            </div>
 
-@section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#ilDropdown").change(function () {
-                var ilId = $(this).val();
-                if (ilId) {
-                    $.ajax({
-                        url: '@Url.Action("GetIlcelerByIlId", "Ciftlik")',
-                        type: "GET",
-                        data: { ilId: ilId },
-                        success: function (data) {
-                            var ilceDropdown = $("#ilceDropdown");
-                            ilceDropdown.empty();
-                            ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
-                            $.each(data, function (index, item) {
-                                ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $("#ilceDropdown").empty();
-                    $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
-                }
+                            <div class="form-group">
+                                <label for="RUHSATNO">Ruhsat No</label>
+                                <input placeholder="Ruhsat No" class="form-control" id="RUHSATNO" name="RUHSATNO" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ADRES">Adres</label>
+                                <input placeholder="Adres" class="form-control" id="ADRES" name="ADRES" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>İl</label>
+                                @Html.DropDownList("IL", (List<SelectListItem>)ViewBag.il, new { @class = "form-control", id = "ilDropdown" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>İlçe</label>
+                                <select id="ilceDropdown" name="ILCE" class="form-control">
+                                    <option value="">İlçe Seçiniz</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="TELEFON">Telefon</label>
+                                <input placeholder="Telefon" class="form-control" id="TELEFON" name="TELEFON" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="FAX">Faks</label>
+                                <input placeholder="Faks" class="form-control" id="FAX" name="FAX" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="E_MAIL">Mail Adresi</label>
+                                <input placeholder="Mail Adresi" class="form-control" id="E_MAIL" name="E_MAIL" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="VERGI_DAIRESI">Vergi Dairesi</label>
+                                <input placeholder="Vergi Dairesi" class="form-control" id="VERGI_DAIRESI" name="VERGI_DAIRESI" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="VERGI_NO">Vergi No</label>
+                                <input placeholder="Vergi No" class="form-control" id="VERGI_NO" name="VERGI_NO" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="DEPONO">Depo No</label>
+                                <input placeholder="Depo No" class="form-control" id="DEPONO" name="DEPONO" />
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Çiftlik Ekle</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    </div><!-- /.wrapper -->
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $("#ilDropdown").change(function () {
+                    var ilId = $(this).val();
+                    if (ilId) {
+                        $.ajax({
+                            url: '@Url.Action("GetIlcelerByIlId", "Ciftlik")',
+                            type: "GET",
+                            data: { ilId: ilId },
+                            success: function (data) {
+                                var ilceDropdown = $("#ilceDropdown");
+                                ilceDropdown.empty();
+                                ilceDropdown.append('<option value="">İlçe Seçiniz</option>');
+                                $.each(data, function (index, item) {
+                                    ilceDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                                });
+                            }
+                        });
+                    } else {
+                        $("#ilceDropdown").empty();
+                        $("#ilceDropdown").append('<option value="">İlçe Seçiniz</option>');
+                    }
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }
+</body>
+</html>

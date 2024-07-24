@@ -2,42 +2,168 @@
 @model List<MoluEt.Models.YemlemeOgun>
 
 @{
-    ViewData["Title"] = "YemlemeOgunList";
+    ViewData["Title"] = "Yemleme Öğün Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- jQuery -->
+   @*  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-<form id="searchForm" method="get" action="~/YemlemeOgun/YemlemeOgunList" class="form-inline mb-4">
-    <div class="input-group input-group-md">
-        <input type="text" class="form-control form-control-search" name="searchTerm" placeholder="Öğün Açıklama ile ara..." aria-label="Search">
-        <div class="input-group-append">
-            <button class="btn btn-search" type="submit">
-                <i class="fas fa-search"></i> Ara
-            </button>
+            .page-header h1 {
+                font-size: 1.75rem; /* Font size for the title */
+                margin: 0; /* Remove margin */
+            }
+
+        .btn-primary, .btn-search, .btn-success, .btn-danger {
+            font-size: 1rem; /* Font size for buttons */
+        }
+
+        .btn-search {
+            background-color: #007bff; /* Button background color */
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+            .btn-search:hover {
+                background-color: #0056b3; /* Button background color on hover */
+                color: white;
+            }
+
+        .form-control-search {
+            border-radius: 0.25rem;
+            border: 1px solid #ced4da;
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Aralarındaki boşluğu ayarlamak için */
+            margin-bottom: 20px; /* Form ve buton arasında boşluk */
+        }
+
+            .form-container .form-inline {
+                flex: 1; /* Formun genişliği */
+            }
+
+            .form-container .card-tools {
+                margin-left: 10px; /* Arama formu ile buton arasındaki boşluk */
+            }
+
+        .table thead th {
+            background-color: transparent; /* Başlık hücrelerinin arka plan rengini kaldırır */
+            color: #343a40; /* Başlık metin rengi */
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Alternatif satır rengi */
+        }
+    </style>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>@ViewData["Title"]</h1>
         </div>
-    </div>
-    <div class="card-tools">
-        <a href="~/YemlemeOgun/YemlemeOgunList" class="btn btn-success">Yeni Öğün</a>
-    </div>
-</form>
 
-<table class="table table-bordered">
-    <tr>
-        <th>Öğün No</th>
-        <th>Acıklama</th>
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Arama ve Butonları aynı satırda hizalamak için Flexbox kullanımı -->
+                        <div class="form-container">
+                            <!-- Search Form -->
+                            <form id="searchForm" method="get" action="~/YemlemeOgun/YemlemeOgunList" class="form-inline">
+                                <div class="input-group input-group-md">
+                                    <input type="text" class="form-control form-control-search" name="searchTerm" placeholder="Öğün Açıklama ile ara..." aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-search" type="submit">
+                                            <i class="fas fa-search"></i> Ara
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-tools">
+                                    <a href="~/YemlemeOgun/YemlemeOgunEkle" class="btn btn-success">Yeni Öğün</a>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Table -->
+                        <div class="table-responsive mt-4">
+                            <table id="yemlemeOgunTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Öğün No</th>
+                                        <th>Açıklama</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.OGUNSIRA</td>
+                                            <td><a href="~/YemlemeOgun/OgunGuncelle/@item.OGUNSIRA" class="text-primary">@item.ACIKLAMA</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    </div><!-- /.wrapper -->
 
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-
-            <td>@item.OGUNSIRA</td>
-            <td><a href="~/YemlemeOgun/OgunGuncelle/@item.OGUNSIRA">@item.ACIKLAMA</a></td>
-
-        </tr>
-    }
-
-
-</table>
-<a href="~/YemlemeOgun/YemlemeOgunEkle" class="btn btn-danger">Öğün Ekle</a>
+    <script>
+        $(document).ready(function () {
+            $('#yemlemeOgunTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json"
+                },
+                "autoWidth": false, // Tabloyu tam genişlikte yapar
+                "responsive": true // Tabloyu responsive yapar
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,31 +1,150 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<MoluEt.Models.RasyonDetay>
 
-
 @{
-    ViewData["Title"] = "RasyonDetayEkle";
+    ViewData["Title"] = "Rasyon Detay Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
 
+    <style>
+        .page-header {
+            background-color: #343a40; /* Header background color */
+            color: #fff; /* Text color */
+            padding: 20px; /* Padding inside the header */
+            margin-bottom: 20px; /* Bottom margin */
+            margin-top: 40px; /* Margin at the top to push it down */
+        }
 
-<form asp-action="RasyonDetayEkle" asp-route-id="@Model[0].URUNNO@Model[0].CIFTLIKNO" asp-controller="Rasyon" method="post">
-    <h2>Çiftlik no: @Model[0].CIFTLIKNO @Model[0].CIFTLIKADI </h2>
-    <h2>Rasyon Ürünü: @Model[0].URUNNO @Model[0].URUNADI  </h2>
-    <h2>Birim üretim Miktarı: @Model[0].BRMMIKTAR</h2>
-    <h2>Açıklama: @Model[0].ACIKLAMA</h2>
+            .page-header h1 {
+                font-size: 1.75rem; /* Font size for the title */
+                margin: 0; /* Remove margin */
+            }
 
-    <input name="CIFTLIKNO" value=@Model[0].CIFTLIKNO hidden="hidden" />
+        .card {
+            border-radius: 0.25rem; /* Card border radius */
+        }
 
+        .card-header {
+            background-color: #343a40; /* Card header background color */
+            color: #fff; /* Card header text color */
+        }
 
-    <input name="URUNNO" value=@Model[0].URUNNO hidden="hidden" />
+        .card-title {
+            font-size: 1.75rem; /* Font size for card title */
+        }
 
+        .btn-primary {
+            font-size: 1.25rem; /* Font size for buttons */
+            border-radius: 0.25rem; /* Button border radius */
+        }
 
-    @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia)
+        .card-body {
+            padding: 20px; /* Padding inside the card body */
+        }
 
-    <input placeholder="Miktar" class="input-group" name="MIKTAR" />
-    <button asp-action="RasyonDetayEkle" asp-route-id="@Model[0].URUNNO@Model[0].CIFTLIKNO" asp-controller="Rasyon">Rasyon Detay Ekle</button>
+        .form-group label {
+            font-weight: bold; /* Make labels bold */
+        }
 
+        .card-footer {
+            text-align: right; /* Align button to the right */
+            padding: 20px; /* Padding inside the footer */
+        }
 
-</form>
+        .btn-primary {
+            background-color: #007bff; /* Button background color */
+            border: none;
+            padding: 0.5rem 1rem; /* Button padding */
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3; /* Button background color on hover */
+            }
+
+        .form-control {
+            border-radius: 0.25rem; /* Input border radius */
+        }
+
+        .table thead th {
+            background-color: #343a40; /* Table header background color */
+            color: #fff; /* Table header text color */
+        }
+
+        .table td, .table th {
+            vertical-align: middle; /* Align text in the middle */
+        }
+
+        .btn-danger {
+            background-color: #dc3545; /* Button background color */
+            border: none;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333; /* Button background color on hover */
+            }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Rasyon Detay Ekle</h3>
+                    </div>
+                    <form asp-action="RasyonDetayEkle" asp-route-id="@Model[0].URUNNO@Model[0].CIFTLIKNO" asp-controller="Rasyon" method="post">
+                        <div class="card-body">
+                            <h4>Çiftlik No: @Model[0].CIFTLIKNO - @Model[0].CIFTLIKADI</h4>
+                            <h4>Rasyon Ürünü: @Model[0].URUNNO - @Model[0].URUNADI</h4>
+                            <h4>Birim Üretim Miktarı: @Model[0].BRMMIKTAR</h4>
+                            <h4>Açıklama: @Model[0].ACIKLAMA</h4>
+
+                            <input name="CIFTLIKNO" value="@Model[0].CIFTLIKNO" type="hidden" />
+                            <input name="URUNNO" value="@Model[0].URUNNO" type="hidden" />
+
+                            <div class="form-group">
+                                <label for="EMTIANO">Kullanılan Ürün</label>
+                                @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control", id = "EMTIANO" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="MIKTAR">Miktar</label>
+                                <input placeholder="Miktar" class="form-control" name="MIKTAR" id="MIKTAR" />
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Rasyon Detay Ekle</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+    </div><!-- /.wrapper -->
+</body>
+</html>
+ *@
