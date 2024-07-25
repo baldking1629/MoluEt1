@@ -283,6 +283,14 @@ namespace MoluEt.services
             command.CommandText = $"INSERT INTO CFKMT003 (SIRKETNO,CIFTLIKNO,URUNNO,MIKTAR,ACIKLAMA) VALUES(1,{r.CIFTLIKNO},{r.URUNNO},{r.MIKTAR},'{r.ACIKLAMA}')";
             command.ExecuteNonQuery();
         }
+        public void RasyonGuncelle(Rasyon r) 
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"UPDATE CFKMT003 SET MIKTAR={r.MIKTAR}, ACIKLAMA='{r.ACIKLAMA}' WHERE CIFTLIKNO={r.CIFTLIKNO} AND URUNNO={r.URUNNO}";
+            command.ExecuteNonQuery();
+        }
         public void RasyonDetayEkle(RasyonDetay r)
         {
             OracleConnection connection = new OracleConnection(_connectionString);
@@ -299,6 +307,14 @@ namespace MoluEt.services
             }
 
             command.CommandText = $"INSERT INTO CFKDT003 (SIRKETNO,CIFTLIKNO,URUNNO,SIRANO,EMTIANO,MIKTAR) VALUES(1,{r.CIFTLIKNO},{r.URUNNO},{sirano},{r.EMTIANO},{r.MIKTAR})";
+            command.ExecuteNonQuery();
+        }
+        public void RasyonDetayGuncelle(RasyonDetay rd)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"UPDATE CFKDT003 SET MIKTAR={rd.MIKTAR}, EMTIANO={rd.EMTIANO} WHERE CIFTLIKNO={rd.CIFTLIKNO} AND URUNNO={rd.URUNNO} AND SIRANO={rd.SIRANO}";
             command.ExecuteNonQuery();
         }
         public void RasyonDetaySil(int ciftlikno,int urunno, int sirano)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MoluEt.Models;
 using MoluEt.services;
 using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MoluEt.Controllers
 {
@@ -154,6 +155,35 @@ namespace MoluEt.Controllers
         {
             _rasyonDataServices.RasyonDetaySil(ciftlikno, urunno, sirano);
             return RedirectToAction("RasyonDetayList", new {id = "" + urunno + ciftlikno} );
+        }
+        [HttpGet]
+        public IActionResult RasyonDetayGuncelle(RasyonDetay rd)
+        {
+            List<Urun> emtiaListe = _rasyonDataServices.EmtiaGetir();
+            List<SelectListItem> emtiaList = (from i in emtiaListe
+                                              select new SelectListItem
+                                              {
+                                                  Text = i.EMTIAAD,
+                                                  Value = i.EMTIANO.ToString(),
+
+
+                                              }).ToList();
+            ViewBag.emtia = emtiaList;
+            return View(rd);
+        }
+
+        [HttpPost]
+        public IActionResult RasyonDetayGuncelle(RasyonDetay rd,int id)
+        {
+            _rasyonDataServices.RasyonDetayGuncelle(rd);
+            return RedirectToAction("RasyonDetayList", new { id = "" + rd.URUNNO + rd.CIFTLIKNO });
+        }
+
+        public IActionResult RasyonGuncelle(Rasyon r)
+        {
+            _rasyonDataServices.RasyonGuncelle(r);
+            string no = ""+r.URUNNO+r.CIFTLIKNO;
+            return RedirectToAction("RasyonDetayList", new { id = no });
         }
     }
 }
