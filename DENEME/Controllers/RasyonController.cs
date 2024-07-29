@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MoluEt.Models;
 using MoluEt.services;
-using System.Reflection.Metadata;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace MoluEt.Controllers
 {

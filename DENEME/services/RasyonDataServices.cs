@@ -81,15 +81,10 @@ namespace MoluEt.services
                                 }
 
                             }
-
                             rasyonlist.Add(h);
                         }
-
                     }
                 }
-
-
-
             }
             return rasyonlist;
         }

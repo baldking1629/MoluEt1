@@ -1,8 +1,6 @@
 ﻿@model MoluEt.Models.RasyonDetay
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-
-
 @{
     ViewData["Title"] = "Rasyon Detay Güncelle";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -116,28 +114,40 @@
             <div class="container-fluid">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Rasyon Detay Ekle</h3>
+                        <h3 class="card-title">Rasyon Detay Güncelle</h3>
                     </div>
                     <form asp-action="RasyonDetayGuncelle" asp-controller="Rasyon" method="post">
                         <div class="card-body">
-                            <h4>Çiftlik No: @Model.CIFTLIKNO - @Model.CIFTLIKADI</h4>
-                            <h4>Rasyon Ürünü: @Model.URUNNO - @Model.URUNADI</h4>
-                            <h4>Birim Üretim Miktarı: @Model.BRMMIKTAR</h4>
-                            <h4>Açıklama: @Model.ACIKLAMA</h4>
+                            <div class="form-group">
+                                <label for="ciftlikNo">Çiftlik No:</label>
+                                <input type="text" class="form-control" id="ciftlikNo" value="@Model.CIFTLIKNO - @Model.CIFTLIKADI" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="urunNo">Rasyon Ürünü:</label>
+                                <input type="text" class="form-control" id="urunNo" value="@Model.URUNNO - @Model.URUNADI" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="brmMiktar">Birim Üretim Miktarı:</label>
+                                <input type="text" class="form-control" id="brmMiktar" value="@Model.BRMMIKTAR" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="aciklama">Açıklama:</label>
+                                <input type="text" class="form-control" id="aciklama" value="@Model.ACIKLAMA" readonly>
+                            </div>
 
                             <input name="CIFTLIKNO" value="@Model.CIFTLIKNO" type="hidden" />
                             <input name="URUNNO" value="@Model.URUNNO" type="hidden" />
 
                             <div class="form-group">
-                                <label>Kullanılan Ürün</label>
-                                @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia, Model.EMTIAADI , new { @class = "form-control", id = "EMTIANO" })
+                                <label for="emtiamo">Kullanılan Ürün</label>
+                                @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia, Model.EMTIAADI, new { @class = "form-control", id = "emtiamo" })
                             </div>
 
                             <div class="form-group">
-                                <label>Miktar</label>
-                                <input placeholder="Miktar" class="form-control" name="MIKTAR" id="MIKTAR" value=@Model.MIKTAR />
+                                <label for="miktar">Miktar</label>
+                                <input placeholder="Miktar" class="form-control" name="MIKTAR" id="miktar" value="@Model.MIKTAR" />
                             </div>
-                            <input  name="SIRANO"  value=@Model.SIRANO  hidden="hidden"/>
+                            <input name="SIRANO" value="@Model.SIRANO" hidden="hidden" />
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Rasyon Detay Güncelle</button>
                             </div>

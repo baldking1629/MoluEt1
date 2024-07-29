@@ -1,5 +1,4 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<MoluEt.Models.RasyonDetay>
+﻿@model List<MoluEt.Models.RasyonDetay>
 
 @{
     ViewData["Title"] = "Rasyon Detay Listesi";
@@ -18,8 +17,8 @@
     <!-- AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
     <!-- jQuery -->
-    @*     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    *@    <!-- Bootstrap 4 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
@@ -34,12 +33,13 @@
         }
 
             .page-header h1 {
-                font-size: 1.75rem; /* Font size for the title */
+                font-size: 1.5rem; /* Font size for the title */
                 margin: 0; /* Remove margin */
             }
 
         .card {
             border-radius: 0.25rem; /* Card border radius */
+            margin-bottom: 20px; /* Margin below the card */
         }
 
         .card-header {
@@ -48,11 +48,11 @@
         }
 
         .card-title {
-            font-size: 1.75rem; /* Font size for card title */
+            font-size: 1.5rem; /* Font size for card title */
         }
 
         .btn-primary {
-            font-size: 1.25rem; /* Font size for buttons */
+            font-size: 1rem; /* Font size for buttons */
             border-radius: 0.25rem; /* Button border radius */
         }
 
@@ -95,6 +95,14 @@
         .table-bordered {
             border: 1px solid #dee2e6; /* Border color */
         }
+
+        .table-responsive {
+            overflow-x: auto; /* Allow horizontal scrolling for tables */
+        }
+
+        .form-control {
+            box-sizing: border-box; /* Ensure padding is included in element's total width and height */
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -113,7 +121,6 @@
                     </div>
                     <div class="card-body">
                         <form asp-action="RasyonGuncelle" asp-controller="Rasyon" method="post">
-
                             <div class="form-group">
                                 <label for="CIFTLIKNO">Çiftlik No</label>
                                 <input type="text" id="CIFTLIKNO" class="form-control" value="@Model[0].CIFTLIKNO - @Model[0].CIFTLIKADI" readonly />
@@ -131,80 +138,73 @@
                                 <input type="text" id="ACIKLAMA" name="ACIKLAMA" class="form-control" value="@Model[0].ACIKLAMA" />
                             </div>
 
-                            <input name="URUNNO" value=@Model[0].URUNNO  hidden="hidden" />
-                            <input name="CIFTLIKNO" value=@Model[0].CIFTLIKNO hidden="hidden" />
+                            <input name="URUNNO" value="@Model[0].URUNNO" type="hidden" />
+                            <input name="CIFTLIKNO" value="@Model[0].CIFTLIKNO" type="hidden" />
 
                             <button asp-action="RasyonGuncelle" asp-controller="Rasyon" class="btn btn-danger" formmethod="post">Güncelle</button>
                         </form>
                         <br />
                         <form asp-action="RasyonDetayEkle" asp-controller="Rasyon" method="post">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Sıra No</th>
-                                        <th>Kullanılan Ürün No</th>
-                                        <th>Kullanılan Ürün Adı</th>
-                                        <th>Birim</th>
-                                        <th>Kullanılan Miktar</th>
-                                        <th>Fiyat</th>
-                                        <th>Tutar</th>
-                                        <th>İşlemler</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
                                         <tr>
-                                            <td>@item.SIRANO</td>
-                                            <td>@item.EMTIANO</td>
-                                            <td>@item.EMTIAADI</td>
-                                            <td>KG</td>
-                                            <td><input name="MIKTAR" value=@item.MIKTAR class="form-control" /></td>
-                                            <td>@item.FIYAT</td>
+                                            <th>Sıra No</th>
+                                            <th>Kullanılan Ürün No</th>
+                                            <th>Kullanılan Ürün Adı</th>
+                                            <th>Birim</th>
+                                            <th>Kullanılan Miktar</th>
+                                            <th>Fiyat</th>
+                                            <th>Tutar</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.SIRANO</td>
+                                                <td>@item.EMTIANO</td>
+                                                <td>@item.EMTIAADI</td>
+                                                <td>KG</td>
+                                                <td><input name="MIKTAR" value="@item.MIKTAR" class="form-control" /></td>
+                                                <td>@item.FIYAT</td>
+                                                <td></td>
+                                                <td>
+                                                    <a class="btn btn-success" href="@Url.Action("RasyonDetayGuncelle", "Rasyon", item)">
+                                                        Güncelle
+                                                    </a>
+                                                    <a class="btn btn-danger" href="@Url.Action("RasyonDetaySil", "Rasyon", new { ciftlikno = item.CIFTLIKNO, urunno = item.URUNNO, sirano = item.SIRANO })">
+                                                        Sil
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        <tr>
+                                            <td><input name="SIRANO" value="" disabled="disabled" /></td>
                                             <td></td>
                                             <td>
-                                                <a class="btn btn-success" href="@Url.Action("RasyonDetayGuncelle", "Rasyon", item)" >
-                                                    Guncelle
-                                                </a>
-                                                <a class="btn btn-danger" href="@Url.Action("RasyonDetaySil", "Rasyon", new { ciftlikno = item.CIFTLIKNO, urunno = item.URUNNO, sirano = item.SIRANO })">
-                                                    Sil
-                                                </a>
+                                                @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control" })
                                             </td>
+                                            <td><label>KG</label></td>
+                                            <td><input name="MIKTAR" value="" class="form-control" /></td>
+                                            <td><input name="FIYAT" value="" class="form-control" /></td>
+                                            <td></td>
+                                            <input name="CIFTLIKNO" value="@Model[0].CIFTLIKNO" type="hidden" />
+                                            <input name="URUNNO" value="@Model[0].URUNNO" type="hidden" />
                                         </tr>
-                                    }
-
-                                    <tr>
-                                        <td><input name="SIRANO" value="" disabled="disabled" /></td>
-                                        <td></td>
-                                        <td>
-                                            @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control" })
-                                        </td>
-                                        <td><label>KG</label></td>
-                                        <td><input name="MIKTAR" value="" class="form-control" /></td>
-                                        <td><input name="FIYAT" value="" class="form-control" /></td>
-                                        <td></td>
-                                        <input name="CIFTLIKNO" value="@Model[0].CIFTLIKNO" type="hidden" />
-                                        <input name="URUNNO" value="@Model[0].URUNNO" type="hidden" />
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-danger">Rasyon Ekle</button>
+                                <button class="btn btn-primary">Ekle</button>
                             </div>
                         </form>
-                        @if (Model.Any())
-                        {
-                            decimal? topmik = 0;
-                            foreach (var item in Model)
-                            {
-                                topmik = topmik + item.MIKTAR;
-                            }
-                            <label>Toplam Miktar: @topmik</label>
-                        }
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
-    </div><!-- /.wrapper -->
+    </div>
 </body>
 </html>
