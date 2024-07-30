@@ -20,5 +20,6 @@ namespace MoluEt.Models
         public string? MAILSIFRE { get; set; }
         public string? MAILKULAD { get; set; }
         public string? EFATPATH { get; set; }
+
     }
 }
