@@ -155,17 +155,11 @@ namespace MoluEt.services
                                         else { h.URUNACIKLAMA = reader2.GetString(0); }
                                     }
                                 }
-
                             }
-
                             rasyonlist.Add(h);
                         }
-
                     }
                 }
-
-
-
             }
             return rasyonlist;
         }
@@ -300,8 +294,9 @@ namespace MoluEt.services
             {
                 sirano = GetListRasyonDetayById(r.URUNNO, r.CIFTLIKNO).Max(o => o.SIRANO) + 1;
             }
+            
 
-            command.CommandText = $"INSERT INTO CFKDT003 (SIRKETNO,CIFTLIKNO,URUNNO,SIRANO,EMTIANO,MIKTAR) VALUES(1,{r.CIFTLIKNO},{r.URUNNO},{sirano},{r.EMTIANO},{r.MIKTAR})";
+            command.CommandText = $"INSERT INTO CFKDT003 (SIRKETNO,CIFTLIKNO,URUNNO,SIRANO,EMTIANO,MIKTAR) VALUES({r.SIRKETNO},{r.CIFTLIKNO},{r.URUNNO},{sirano},{r.EMTIANO},{r.MIKTAR})";
             command.ExecuteNonQuery();
         }
         public void RasyonDetayGuncelle(RasyonDetay rd)
@@ -392,11 +387,9 @@ namespace MoluEt.services
                             else { ciftlik.UDP_DATE = reader.GetString(19); }
                             ciftliklist.Add(ciftlik);
                         }
-
                     }
                 }
             }
-
             return ciftliklist;
         }
         public List<Urun> UrunGetir()

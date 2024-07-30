@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<form action="/Login/Login" method="post">
+
+    <input placeholder="Kullanıcı Adı" name="kullaniciadi" />
+    <br />
+    <input placeholder="Şifre" name="sifre"/><br />
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+    {
+        <label style="color:darkred">
+            @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+
+        </label>
+        
+    }
+    <button class="btn btn-danger">Giris Yap</button>
+</form>

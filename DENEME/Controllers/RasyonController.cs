@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MoluEt.Models;
 using MoluEt.services;
@@ -6,7 +7,7 @@ using MoluEt.services;
 
 namespace MoluEt.Controllers
 {
-
+    [Authorize]
     public class RasyonController : Controller
     {
         RasyonDataServices _rasyonDataServices = new RasyonDataServices();
@@ -145,8 +146,10 @@ namespace MoluEt.Controllers
 
         public IActionResult RasyonDetayEkle(RasyonDetay rd)
         {
+            rd.SIRKETNO = Convert.ToInt32(User.Identity.Name);
             _rasyonDataServices.RasyonDetayEkle(rd);
             string no = "" + rd.URUNNO + rd.CIFTLIKNO;
+            
             return RedirectToAction("RasyonDetayList", new { id = no });
         }
 

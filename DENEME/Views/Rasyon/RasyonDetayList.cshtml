@@ -167,7 +167,7 @@
                                                 <td>@item.EMTIANO</td>
                                                 <td>@item.EMTIAADI</td>
                                                 <td>KG</td>
-                                                <td><input name="MIKTAR" value="@item.MIKTAR" class="form-control" /></td>
+                                                <td><input @* name="MIKTAR"  *@value="@item.MIKTAR" class="form-control" /></td>
                                                 <td>@item.FIYAT</td>
                                                 <td></td>
                                                 <td>
@@ -188,8 +188,8 @@
                                                 @Html.DropDownList("EMTIANO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control" })
                                             </td>
                                             <td><label>KG</label></td>
-                                            <td><input name="MIKTAR" value="" class="form-control" /></td>
-                                            <td><input name="FIYAT" value="" class="form-control" /></td>
+                                            <td><input name="MIKTAR" class="form-control" /></td>
+                                            <td><input name="FIYAT" class="form-control" /></td>
                                             <td></td>
                                             <input name="CIFTLIKNO" value="@Model[0].CIFTLIKNO" type="hidden" />
                                             <input name="URUNNO" value="@Model[0].URUNNO" type="hidden" />
