@@ -8,7 +8,7 @@ namespace MoluEt.services
         private readonly string _connectionString;
         public KullaniciDataServices()
         {
-            _connectionString = ("Data Source=192.168.1.3:1521/MOLUDB;User ID=SAHIN;Password=MERT;");
+            _connectionString = ("Data Source=192.168.1.5:1521/MOLUDB;User ID=SAHIN;Password=MERT;");
         }
 
         public List<Kullanici> GetList()
