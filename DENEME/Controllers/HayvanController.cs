@@ -17,5 +17,10 @@ namespace MoluEt.Controllers
         {
             return View(_hayvanDataServices.GetList().ToPagedList(page,10));
         }
+
+        public IActionResult HayvanDetay()
+        {
+            return View();
+        }
     }
 }

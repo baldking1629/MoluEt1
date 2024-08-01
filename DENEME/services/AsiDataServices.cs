@@ -60,8 +60,6 @@ namespace MoluEt.services
                     }
                 }
             }
-
-
             return asilist;
         }
 
@@ -110,8 +108,6 @@ namespace MoluEt.services
                     }
                 }
             }
-
-
             return asi;
         }
         public void AsiEkle(Asi asi)
@@ -191,8 +187,6 @@ namespace MoluEt.services
                     }
                 }
             }
-
-
             return asilist;
         }
     }

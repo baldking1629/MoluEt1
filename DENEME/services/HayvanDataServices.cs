@@ -60,9 +60,8 @@ namespace MoluEt.services
                                         else { h.CIFTLIKADI = reader1.GetString(0); }
                                     }
                                 }
-
                             }
-                            if (h.BESIGRUP !=null)
+                            if (h.BESIGRUP != null)
                             {
                                 using (OracleCommand command2 = new OracleCommand("SELECT ACIKLAMA FROM CFKTT003 WHERE BESIGRUP =" + h.BESIGRUP, connection))
                                 {
@@ -74,16 +73,21 @@ namespace MoluEt.services
                                             else { h.BESIGRUPACIKLAMA = reader2.GetString(0); }
                                         }
                                     }
-
                                 }
                             }
-                            
                             hayvanList.Add(h);
                         }
                     }
                 }
             }
             return hayvanList;
+        }
+
+        public Hayvan GetHayvanById()
+        {
+            Hayvan h = new Hayvan();
+            //buraya plsql komutları gelecek
+            return h;
         }
     }
 }
