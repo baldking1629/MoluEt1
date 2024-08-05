@@ -24,8 +24,7 @@ namespace MoluEt.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, item.SIRKETNO.ToString()),
-                        new Claim("kullanicino",item.KULNO.ToString())
-                        //new Claim(ClaimsIdentity.DefaultNameClaimType , item.SIRKETNO.ToString()),
+                        new Claim("kullanicino",item.KULNO.ToString()),  
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
