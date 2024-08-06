@@ -10,6 +10,7 @@ namespace MoluEt.Controllers
         RasyonUretimDataServices _rasyonUretimDataServices = new RasyonUretimDataServices();
         RasyonDataServices _rasyonDataServices = new RasyonDataServices();
         CiftlikDataService _ciftlikDataServices = new CiftlikDataService();
+
         public IActionResult RasyonUretimListele(string searchTerm)
         {
             List<RasyonUretim> RasyonUretimGruplar;
@@ -43,11 +44,11 @@ namespace MoluEt.Controllers
             ViewBag.ciftlik = ciftlikList;
             return View();
         }
+
         [HttpPost]
         public IActionResult RasyonUretimEkle(RasyonUretim r)
         {
-            int sirketno = Convert.ToInt32(User.Identity.Name);
-            r.SIRKETNO = sirketno;
+            r.SIRKETNO = Convert.ToInt32(User.Identity.Name);
             _rasyonUretimDataServices.RasyonUretimEkle(r);
             return RedirectToAction("RasyonUretimListele");
         }
@@ -64,12 +65,7 @@ namespace MoluEt.Controllers
 
                                               }).ToList();
             ViewBag.emtia = emtiaList;
-
             List<RasyonUretimDetay> data = _rasyonUretimDataServices.GetRasyonUretimById(uretimno, ciftlikno);
-            //if (data.Count == 0)
-            //{
-            //    return RedirectToAction("RasyonUretimListele");
-            //}
             return View(data);
         }
 

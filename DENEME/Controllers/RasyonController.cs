@@ -20,7 +20,6 @@ namespace MoluEt.Controllers
         {
             List<Rasyon>? data = _rasyonDataServices.GetList();
             return View(data);
-
         }
 
         public IActionResult RasyonDetayList(int id)
@@ -48,8 +47,9 @@ namespace MoluEt.Controllers
             }
 
         }
-        [HttpGet]
 
+
+        [HttpGet]
         public IActionResult RasyonEkle()
         {
             List<Ciftlik> ciftlikListe = _rasyonDataServices.CiftlikGetir();
@@ -87,12 +87,9 @@ namespace MoluEt.Controllers
 
 
         [HttpPost]
-
         public IActionResult RasyonEkle(Rasyon r)
         {
-
             _rasyonDataServices.RasyonEkle(r);
-
             return RedirectToAction("RasyonList");
         }
 
@@ -149,7 +146,6 @@ namespace MoluEt.Controllers
             rd.SIRKETNO = Convert.ToInt32(User.Identity.Name);
             _rasyonDataServices.RasyonDetayEkle(rd);
             string no = "" + rd.URUNNO + rd.CIFTLIKNO;
-            
             return RedirectToAction("RasyonDetayList", new { id = no });
         }
 
@@ -158,6 +154,7 @@ namespace MoluEt.Controllers
             _rasyonDataServices.RasyonDetaySil(ciftlikno, urunno, sirano);
             return RedirectToAction("RasyonDetayList", new {id = "" + urunno + ciftlikno} );
         }
+
         [HttpGet]
         public IActionResult RasyonDetayGuncelle(RasyonDetay rd)
         {
@@ -167,7 +164,6 @@ namespace MoluEt.Controllers
                                               {
                                                   Text = i.EMTIAAD,
                                                   Value = i.EMTIANO.ToString(),
-
 
                                               }).ToList();
             ViewBag.emtia = emtiaList;
