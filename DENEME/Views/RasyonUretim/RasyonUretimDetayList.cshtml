@@ -151,53 +151,88 @@
                         </form>
                         <br />
                         <!-- Table -->
-                        <form asp-action="RasyonUretimDetayEkle" asp-controller="RasyonUretim" method="post">
 
 
-                            <div class="table-responsive mt-4">
-                                <table class="table table-bordered">
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered">
+
+                                <tr>
+                                    <th>Sıra</th>
+                                    <th>Üretim Ürün Adı</th>
+                                    <th>Birim</th>
+                                    <th>Üretim Miktar</th>
+                                    <th>İşlemler</th>
+
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <form asp-controller="RasyonUretim" method="post">
                                     <tr>
-                                        <th>Sıra</th>
-                                        <th>Üretim Ürün No</th>
-                                        <th>Üretim Ürün Adı</th>
-                                        <th>Birim</th>
-                                        <th>Üretim Miktar</th>
 
-                                    </tr>
-
-                                    @foreach (var item in Model)
-                                    {
-
-                                        <tr>
-
-                                            <td>@item.SIRANO</td>
-                                            <td>@item.URUNNO</td>
-                                            <td>@item.URUNADI</td>
-                                            <td>KG</td>
-                                            <td>@item.MIKTAR</td>
-
-                                        </tr>
-
-                                    }
-                                    <tr>
-                                        <td><input name="SIRANO" value="" disabled="disabled" /></td>
-                                        <td></td>
+                                        <td>@item.SIRANO</td>
+                                            @* <td>@item.URUNNO</td>*@
                                         <td>
-                                            @Html.DropDownList("URUNNO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control" })
+                                            <select name="URUNNO" class="form-control">
+                                                    @foreach (var m in (List<SelectListItem>)ViewBag.emtia)
+                                                    {
+                                                        if (item.URUNNO == Convert.ToInt32(m.Value))
+                                                        {
+                                                        <option value=@m.Value selected="selected">
+                                                                @m.Text
+                                                        </option>
+                                                        }
+                                                        else
+                                                        {
+                                                        <option value=@m.Value>@m.Text</option>
+                                                        }
+
+                                                    }
+                                            </select>
                                         </td>
-                                        <td><label>KG</label></td>
-                                        <td><input name="MIKTAR" class="form-control" /></td>
+                                        <td>KG</td>
+                                        <td><input name="MIKTAR" value="@item.MIKTAR" class="form-control" /></td>
+                                        <td>
+                                            <button class="btn btn-success" asp-action="RasyonUretimDetayGuncelle">Güncelle</button>
+                                            <button class="btn btn-danger" asp-action="RasyonUretimDetaySil">Sil</button>
+                                        </td>
                                         <input name="CIFTLIKNO" value="@Model[0].rasyonUretim.CIFTLIKNO" type="hidden" />
-                                        
+                                        <input name="SIRANO" value="@item.SIRANO" type="hidden" />
                                         <input name="URETIMNO" value="@Model[0].rasyonUretim.URETIMNO" type="hidden" />
-                                        <input name="TARIH" value="@Model[0].rasyonUretim.TARIH" type="hidden" />
+
                                     </tr>
-                                </table>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-primary">Ekle</button>
-                            </div>
-                        </form>
+                                    </form>
+
+                                }
+
+
+                                <form asp-action="RasyonUretimDetayEkle" asp-controller="RasyonUretim" method="post">
+                                <tr>
+
+                                    <td><input name="SIRANO" value="" disabled="disabled" /></td>
+
+                                    <td>
+                                            @Html.DropDownList("URUNNO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control" })
+                                    </td>
+                                    <td><label>KG</label></td>
+
+                                    <td><input name="MIKTAR" class="form-control" /></td>
+                                    <td>
+
+                                        <button class="btn btn-primary">Ekle</button>
+
+                                    </td>
+                                    <input name="CIFTLIKNO" value="@Model[0].rasyonUretim.CIFTLIKNO" type="hidden" />
+
+                                    <input name="URETIMNO" value="@Model[0].rasyonUretim.URETIMNO" type="hidden" />
+                                    <input name="TARIH" value="@Model[0].rasyonUretim.TARIH" type="hidden" />
+                                </tr>
+                                </form>
+                            </table>
+                        </div>
+
+
                     </div>
                 </div>
             </div><!-- /.container-fluid -->

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MoluEt.Models;
 using MoluEt.services;
 
@@ -81,5 +82,19 @@ namespace MoluEt.Controllers
             _rasyonUretimDataServices.RasyonUretimGuncelle(r);
             return RedirectToAction("RasyonUretimDetayList", new { uretimno = r.URETIMNO, ciftlikno = r.CIFTLIKNO });
         }
+        public IActionResult RasyonUretimDetayGuncelle(RasyonUretimDetay r)
+        {
+            _rasyonUretimDataServices.RasyonUretimDetayGuncelle(r);
+            return RedirectToAction("RasyonUretimDetayList", new { uretimno = r.URETIMNO, ciftlikno = r.CIFTLIKNO });
+
+        }
+
+        public IActionResult RasyonUretimDetaySil(RasyonUretimDetay r)
+        {
+            _rasyonUretimDataServices.RasyonUretimDetaySil(r);
+            return RedirectToAction("RasyonUretimDetayList", new { uretimno = r.URETIMNO, ciftlikno = r.CIFTLIKNO });
+        }
+
+
     }
 }

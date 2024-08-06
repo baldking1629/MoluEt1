@@ -295,5 +295,39 @@ namespace MoluEt.services
             command.ExecuteNonQuery();
             connection.Close();
         }
+        public void RasyonUretimDetayGuncelle(RasyonUretimDetay r)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+
+            command.CommandText = "UPDATE CFKDT011 SET URUNNO=:URUNNO, MIKTAR=:MIKTAR WHERE CIFTLIKNO=:CIFTIKNO AND URETIMNO=:URETIMNO AND SIRANO=:SIRANO";
+
+            command.Parameters.Add(new OracleParameter("URUNNO", r.URUNNO));
+            command.Parameters.Add(new OracleParameter("MIKTAR", r.MIKTAR));
+            command.Parameters.Add(new OracleParameter("CIFTLIKNO", r.CIFTLIKNO));
+            command.Parameters.Add(new OracleParameter("URETIMNO", r.URETIMNO));
+            command.Parameters.Add(new OracleParameter("SIRANO", r.SIRANO));
+           
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        public void RasyonUretimDetaySil(RasyonUretimDetay r)
+        {
+            OracleConnection connection = new OracleConnection(_connectionString);
+            connection.Open();
+            var command = connection.CreateCommand();
+
+            command.CommandText = "DELETE FROM CFKDT011 WHERE CIFTLIKNO=:CIFTIKNO AND URETIMNO=:URETIMNO AND SIRANO=:SIRANO";
+
+            
+            command.Parameters.Add(new OracleParameter("CIFTLIKNO", r.CIFTLIKNO));
+            command.Parameters.Add(new OracleParameter("URETIMNO", r.URETIMNO));
+            command.Parameters.Add(new OracleParameter("SIRANO", r.SIRANO));
+
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
     }
 }
