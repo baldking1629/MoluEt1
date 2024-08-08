@@ -116,7 +116,7 @@
                                     <input type="text" class="form-control form-control-search" name="searchTerm" placeholder="Rasyon açıklama ile ara..." aria-label="Search">
                                     <div class="input-group-append">
                                         <button class="btn btn-search" type="submit">
-                                            <i class="fas fa-search"></i> Ara
+                                            <i class="fas fa-search"></i>Ara
                                         </button>
                                     </div>
                                 </div>
@@ -142,7 +142,6 @@
                                 <label for="ACIKLAMA">Açıklama</label>
                                 <input type="text" id="ACIKLAMA" name="ACIKLAMA" class="form-control" value="@Model[0].rasyonUretim.ACIKLAMA" />
                             </div>
-
 
                             <input name="CIFTLIKNO" value="@Model[0].rasyonUretim.CIFTLIKNO" type="hidden" />
                             <input name="URETIMNO" value="@Model[0].rasyonUretim.URETIMNO" type="hidden" />
@@ -215,8 +214,7 @@
                                     <td>
                                             @Html.DropDownList("URUNNO", (List<SelectListItem>)ViewBag.emtia, "Emtia Seçiniz", new { @class = "form-control" })
                                     </td>
-                                    <td><label>KG</label></td>
-
+                                    <td>KG</td>
                                     <td><input name="MIKTAR" class="form-control" /></td>
                                     <td>
 
@@ -224,15 +222,12 @@
 
                                     </td>
                                     <input name="CIFTLIKNO" value="@Model[0].rasyonUretim.CIFTLIKNO" type="hidden" />
-
                                     <input name="URETIMNO" value="@Model[0].rasyonUretim.URETIMNO" type="hidden" />
                                     <input name="TARIH" value="@Model[0].rasyonUretim.TARIH" type="hidden" />
                                 </tr>
                                 </form>
                             </table>
                         </div>
-
-
                     </div>
                 </div>
             </div><!-- /.container-fluid -->

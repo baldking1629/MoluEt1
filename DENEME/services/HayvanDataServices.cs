@@ -71,6 +71,7 @@ namespace MoluEt.services
                                         {
                                             if (reader2.IsDBNull(0)) { h.BESIGRUPACIKLAMA = null; }
                                             else { h.BESIGRUPACIKLAMA = reader2.GetString(0); }
+                                        
                                         }
                                     }
                                 }

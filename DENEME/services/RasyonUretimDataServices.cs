@@ -70,12 +70,9 @@ namespace MoluEt.services
                         while (reader.Read())
                         {
 
-
-
                             rasyonUretim.SIRKETNO = reader.GetInt32(0);
                             rasyonUretim.CIFTLIKNO = reader.GetInt32(1);
                             rasyonUretim.URETIMNO = reader.GetInt32(2);
-
 
                             if (reader.IsDBNull(3)) { rasyonUretim.TARIH = null; }
                             else { rasyonUretim.TARIH = reader.GetDateTime(3); }
@@ -93,9 +90,7 @@ namespace MoluEt.services
                                         else { rasyonUretim.CIFTLIKADI = reader1.GetString(0); }
                                     }
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -106,7 +101,6 @@ namespace MoluEt.services
         public List<RasyonUretim> RasyonUretimAra(string searchTerm)
         {
             List<RasyonUretim> rasyonUretimlist = new List<RasyonUretim>();
-
 
             using (OracleConnection connection = new OracleConnection(_connectionString))
             {
@@ -142,7 +136,6 @@ namespace MoluEt.services
                                         else { rasyonUretim.CIFTLIKADI = reader1.GetString(0); }
                                     }
                                 }
-
                             }
                             rasyonUretimlist.Add(rasyonUretim);
                         }
@@ -302,7 +295,6 @@ namespace MoluEt.services
             var command = connection.CreateCommand();
 
             command.CommandText = "UPDATE CFKDT011 SET URUNNO=:URUNNO, MIKTAR=:MIKTAR WHERE CIFTLIKNO=:CIFTIKNO AND URETIMNO=:URETIMNO AND SIRANO=:SIRANO";
-
             command.Parameters.Add(new OracleParameter("URUNNO", r.URUNNO));
             command.Parameters.Add(new OracleParameter("MIKTAR", r.MIKTAR));
             command.Parameters.Add(new OracleParameter("CIFTLIKNO", r.CIFTLIKNO));
@@ -320,8 +312,6 @@ namespace MoluEt.services
             var command = connection.CreateCommand();
 
             command.CommandText = "DELETE FROM CFKDT011 WHERE CIFTLIKNO=:CIFTIKNO AND URETIMNO=:URETIMNO AND SIRANO=:SIRANO";
-
-            
             command.Parameters.Add(new OracleParameter("CIFTLIKNO", r.CIFTLIKNO));
             command.Parameters.Add(new OracleParameter("URETIMNO", r.URETIMNO));
             command.Parameters.Add(new OracleParameter("SIRANO", r.SIRANO));
